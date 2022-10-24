@@ -1,7 +1,9 @@
+const { application } = require("express");
 const userService = require("../services/userService");
 
 const createNewUser = async (req, res) => {
     const { idToken, name, email } = req.body;
+    
     if(!idToken){
        return res.status(400).send({
         status: "FAILED",
