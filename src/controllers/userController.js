@@ -2,7 +2,7 @@ const { application } = require("express");
 const userService = require("../services/userService");
 const admin = require('firebase-admin')
 const {initializeApp, applicationDefault} =require ('firebase-admin/app');
-const project_ID = require('../../.env');
+
 const firebase = admin.initializeApp({
   
   credential: applicationDefault(),
@@ -48,9 +48,7 @@ const createNewUser = async (req, res) => {
        });
      }
     }
-    return res.status(700).send({
-      status: "FAILED TOKEN",
-  });
+    
 }
   
 
