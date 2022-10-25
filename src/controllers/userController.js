@@ -11,7 +11,8 @@ const firebase = admin.initializeApp({
 
 const createNewUser = async (req, res) => {
     const { idToken, name, email } = req.body;
-    if(verify(idToken)){
+    const authToken = await verify(idToken);
+    if(authToken){
       if(!idToken){
         return res.status(400).send({
          status: "FAILED",
@@ -48,6 +49,10 @@ const createNewUser = async (req, res) => {
        });
      }
     }
+    res.send({
+      status: "FAILED",
+      message: "Token incorrect",
+    });
     
 }
   
@@ -58,13 +63,9 @@ module.exports = {
 async function verify (token) {
   try {
    let decodedToken = await firebase.auth().verifyIdToken(token)
-   let user = await firebase.firestore().doc(`/user/${decodedToken.user_id}`).get()
-   user = user.data()
-   decodedToken.isAdmin = user.isAdmin
-   decodedToken.slug = user.slug
    return true
   } catch (e) {
    console.log(e)
-   throw new Error(e)
+   return false
   }
  }
