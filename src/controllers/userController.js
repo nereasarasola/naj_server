@@ -39,8 +39,8 @@ const createNewUser = async (req, res) => {
        role: false,
      };
      try {
-       const createdUser = await userService.createNewUser(idToken, newUser);
-       res.send({ status: "OK", data: createdUser });
+       const createdUser = await userService.createNewUser(email, newUser);
+       res.send({  data: createdUser });
      } catch (error) {
        res.status(error?.status || 500).send({
          status: "FAILED",
@@ -49,10 +49,13 @@ const createNewUser = async (req, res) => {
        });
      }
     }
-    res.send({
-      status: "FAILED",
-      message: "Token incorrect",
-    });
+    else{
+      res.send({
+        status: "FAILED",
+        message: "Token incorrect",
+      });
+    }
+   
     
 }
   

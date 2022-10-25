@@ -1,9 +1,9 @@
 const User = require('../models/userModel');
 
 
-const loginUser = async (idToken, newUser) => {
+const loginUser = async (email, newUser) => {
     try {
-      const user = await User.findOne({ idToken: idToken });
+      const user = await User.findOne({ email: email });
       if (!user) {
         let userToInsert = new User(newUser);
         const createdUser = await userToInsert.save();
