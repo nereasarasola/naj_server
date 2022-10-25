@@ -21,7 +21,11 @@ const loginUser = async (email, newUser) => {
         throw error;
     }
 };
-  
+  const cryptEntry = async(email) =>{
+    const user = await User.findOne({ email: email });
+    if(!user)
+    return "Error 404"
+  }
   
 module.exports = {
     loginUser,
