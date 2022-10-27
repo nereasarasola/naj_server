@@ -7,6 +7,9 @@ const userSchema = new Schema({
     email: String,
     active: Boolean,
     role: Boolean,
+    intoTheCryp: Boolean,
+    goldCoins: Number,
+    livePoints: Number
 });
 
 module.exports = mongoose.model('User', userSchema);

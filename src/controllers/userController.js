@@ -37,6 +37,9 @@ const createNewUser = async (req, res) => {
        email: email,
        active: true,
        role: false,
+       intoTheCryp: false,
+       goldCoins: 29,
+       livePoints: 100
      };
      try {
        const createdUser = await userService.createNewUser(email, newUser);
@@ -58,10 +61,36 @@ const createNewUser = async (req, res) => {
    
     
 }
-  
+const cryptEntry = async (req, res) => {
+  const  {
+    body,
+    params:{email}
+  } = req;
+  if (!email) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: {
+        error:
+          "One of the following keys is missing or is empty in request body:'email'",
+      },
+    });
+    
+  }
+  try {
+    const userEntry = await userService.cryptEntry(email,body);
+    res.send({  data: userEntry });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Failed making the req: ",
+      data: { error: error?.message || error },
+    });
+  }
+}
 
 module.exports = {
-    createNewUser
+    createNewUser,
+    cryptEntry
 }
 async function verify (token) {
   try {

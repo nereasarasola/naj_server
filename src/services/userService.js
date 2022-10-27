@@ -9,5 +9,14 @@ const createNewUser = async (idToken, newUser) => {
     }
 };
 
+const cryptEntry = async (email,changes) => {
+    try {
+        const cryptUser = User.cryptEntry(email,changes);
+        return cryptUser;
+    } catch (error) {
+        throw error;
+    }
+};
 
-module.exports = {createNewUser}
+
+module.exports = {createNewUser,cryptEntry}
