@@ -17,6 +17,14 @@ const cryptEntry = async (email,changes) => {
         throw error;
     }
 };
+const allActiveUsers = async() =>{
+    try {
+        const allActiveUsers = User.allActiveUsers();
+        return allActiveUsers;
+    } catch (error) {
+        throw error;
+    }
+}
 
 
-module.exports = {createNewUser,cryptEntry}
+module.exports = {createNewUser,cryptEntry,allActiveUsers}

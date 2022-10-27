@@ -88,9 +88,23 @@ const cryptEntry = async (req, res) => {
   }
 }
 
+const allActiveUsers= async (req, res) => {
+  try {
+    const allActiveUsers = await userService.allActiveUsers();
+    res.send({  data: allActiveUsers });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Failed making the req: ",
+      data: { error: error?.message || error },
+    });
+  }
+}
+
 module.exports = {
     createNewUser,
-    cryptEntry
+    cryptEntry,
+    allActiveUsers,
 }
 async function verify (token) {
   try {
