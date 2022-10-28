@@ -25,6 +25,14 @@ const allActiveUsers = async() =>{
         throw error;
     }
 }
+const updateMoneyandLife = async(email,changes)=>{
+    try {
+        const updateMoneyandLife = User.updateMoneyandLife(email,changes);
+        return updateMoneyandLife;
+    } catch (error) {
+        throw error;
+    }
+}
 
 
-module.exports = {createNewUser,cryptEntry,allActiveUsers}
+module.exports = {createNewUser,cryptEntry,allActiveUsers,updateMoneyandLife}

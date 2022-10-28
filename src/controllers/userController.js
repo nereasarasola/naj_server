@@ -102,10 +102,38 @@ const allActiveUsers= async (req, res) => {
   }
 }
 
+const updateMoneyandLife = async (req, res) => {
+  const  {
+    body,
+    params:{email}
+
+  } = req;
+  if (!email || !life || !money) {
+    return res.status(400).send({
+      status: "FAILED",
+      data: {
+        error:
+          "One of the following keys is missing or is empty in request body:'email'",
+      },
+    });
+    
+  }
+  try {
+    const updateMoneyandLife = await userService.updateMoneyandLife(email,body);
+    res.send({  data: updateMoneyandLife });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Failed making the req: ",
+      data: { error: error?.message || error },
+    });
+  }
+}
 module.exports = {
     createNewUser,
     cryptEntry,
     allActiveUsers,
+    updateMoneyandLife
 }
 async function verify (token) {
   try {
