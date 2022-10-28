@@ -10,7 +10,7 @@ const firebase = admin.initializeApp({
 });
 
 const createNewUser = async (req, res) => {
-    const { idToken, name, email } = req.body;
+    const { idToken, name, email,avatar } = req.body;
     const authToken = await verify(idToken);
     if(authToken){
       if(!idToken){
@@ -39,7 +39,8 @@ const createNewUser = async (req, res) => {
        role: false,
        intoTheCryp: false,
        goldCoins: 29,
-       livePoints: 100
+       livePoints: 100,
+       avatar: avatar
      };
      try {
        const createdUser = await userService.createNewUser(email, newUser);

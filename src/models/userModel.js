@@ -9,7 +9,8 @@ const userSchema = new Schema({
     role: Boolean,
     intoTheCryp: Boolean,
     goldCoins: Number,
-    livePoints: Number
+    livePoints: Number,
+    avatar:String
 });
 
 module.exports = mongoose.model('User', userSchema);
