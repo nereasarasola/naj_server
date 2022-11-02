@@ -30,7 +30,7 @@ const loginUser = async (email, newUser) => {
     return "Error 404"
     else{
       changes.intoTheCryp=!user.intoTheCryp;
-        const updatedUser = await User.findOneAndUpdate(email,
+        const updatedUser = await User.findOneAndUpdate({email:email},
           {$set: changes},
           {new:true}
         );
@@ -46,7 +46,12 @@ const loginUser = async (email, newUser) => {
     if(!user)
     return "Error 404"
     else {
-      console.log(`He recivido ${changes}`);
+      console.log(email);
+      const patcheduser = await User.findOneAndUpdate({email:email},
+        {$set: changes},
+        {new:true}
+      );
+      return patcheduser;
     }
   }
   

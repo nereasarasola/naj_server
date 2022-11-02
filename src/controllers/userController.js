@@ -103,12 +103,13 @@ const allActiveUsers= async (req, res) => {
 }
 
 const updateMoneyandLife = async (req, res) => {
+  const { livePoints,goldCoins} = req.body;
   const  {
     body,
     params:{email}
 
   } = req;
-  if (!email || !life || !money) {
+  if (!email || !livePoints || !goldCoins) {
     return res.status(400).send({
       status: "FAILED",
       data: {
