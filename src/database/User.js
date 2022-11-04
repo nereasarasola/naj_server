@@ -38,7 +38,7 @@ const loginUser = async (email, newUser) => {
     }
   }
   const allActiveUsers= async()=>{
-    const all = User.find({})
+    const all = User.find({role: false},)
     return all;
   }
   const updateMoneyandLife= async(email,changes)=>{
