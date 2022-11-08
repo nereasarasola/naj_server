@@ -4,7 +4,7 @@ on:
     branches:
       - main
 env:
-  FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+  FLY_API_TOKEN: AX3BBIODJU9tp79Z5-qHbHZk1U-NIBr7IJP9S2I1m60
 jobs:
   deploy:
       name: Production server
