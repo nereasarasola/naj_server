@@ -6,7 +6,7 @@ const {initializeApp, applicationDefault} =require ('firebase-admin/app');
 const firebase = admin.initializeApp({
   
   credential: applicationDefault(),
-   projectId: 'auth-cc-naj'
+   projectId:  'auth-cc-naj'
 });
 
 const createNewUser = async (req, res) => {
