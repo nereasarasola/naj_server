@@ -102,26 +102,15 @@ const allActiveUsers= async (req, res) => {
   }
 }
 
-const updateMoneyandLife = async (req, res) => {
-  const { livePoints,goldCoins} = req.body;
+const patchUser = async (req, res) => {
   const  {
     body,
     params:{email}
 
   } = req;
-  if (!email || !livePoints || !goldCoins) {
-    return res.status(400).send({
-      status: "FAILED",
-      data: {
-        error:
-          "One of the following keys is missing or is empty in request body:'email'",
-      },
-    });
-    
-  }
   try {
-    const updateMoneyandLife = await userService.updateMoneyandLife(email,body);
-    res.send({  data: updateMoneyandLife });
+    const patchUser = await userService.patchUser(email,body);
+    res.send({  data: patchUser });
   } catch (error) {
     res.status(error?.status || 500).send({
       status: "FAILED",
@@ -134,7 +123,7 @@ module.exports = {
     createNewUser,
     cryptEntry,
     allActiveUsers,
-    updateMoneyandLife
+    patchUser
 }
 async function verify (token) {
   try {

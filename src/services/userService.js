@@ -25,14 +25,14 @@ const allActiveUsers = async() =>{
         throw error;
     }
 }
-const updateMoneyandLife = async(email,changes)=>{
+const patchUser = async(email,changes)=>{
     try {
-        const updateMoneyandLife = User.updateMoneyandLife(email,changes);
-        return updateMoneyandLife;
+        const patchUser = User.patchUser(email,changes);
+        return patchUser;
     } catch (error) {
         throw error;
     }
 }
 
 
-module.exports = {createNewUser,cryptEntry,allActiveUsers,updateMoneyandLife}
+module.exports = {createNewUser,cryptEntry,allActiveUsers,patchUser}

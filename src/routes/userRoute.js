@@ -6,6 +6,6 @@ const router = express.Router();
 router.post("/",userController.createNewUser);
 router.patch("/cryptEntry/:email",userController.cryptEntry);
 router.get("/",userController.allActiveUsers);
-router.patch("/moneyLife/:email",userController.updateMoneyandLife);
+router.patch("/:email",userController.patchUser);
 
 module.exports = router;

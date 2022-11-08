@@ -41,7 +41,7 @@ const loginUser = async (email, newUser) => {
     const all = User.find({role: false},)
     return all;
   }
-  const updateMoneyandLife= async(email,changes)=>{
+  const patchUser= async(email,changes)=>{
     const user = await User.findOne({ email: email });
     if(!user)
     return "Error 404"
@@ -59,5 +59,5 @@ module.exports = {
     loginUser,
     cryptEntry,
     allActiveUsers,
-    updateMoneyandLife
+    patchUser
 };
