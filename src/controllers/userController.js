@@ -42,6 +42,15 @@ const createNewUser = async (req, res) => {
        livePoints: 100,
        avatar: avatar
      };
+     if(!newUser.email.includes('@aeg.eus') || !newUser.email.includes('@aeg.ikasle.aeg.eus')) {
+        return res.status(400).send({
+          status: "FAILED",
+          data: {
+            error:
+              "Incorrect email",
+          },
+        });
+     }
      try {
        const createdUser = await userService.createNewUser(email, newUser);
        res.send({  data: createdUser });
