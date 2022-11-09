@@ -1,6 +1,6 @@
 const { application } = require("express");
 const userService = require("../services/userService");
-
+require('dotenv').config();
 
 const createNewUser = async (req, res) => {
     const { idToken, name, email,avatar } = req.body;
@@ -25,10 +25,9 @@ const createNewUser = async (req, res) => {
        avatar: avatar
      };
 
-     let user = newUser.email.endsWith('@ikasle.aeg.eus');
-     let joshua = newUser.email.endsWith('@aeg.eus');
+      let user = newUser.email.endsWith('@ikasle.aeg.eus');
 
-     if(!user && !joshua) {
+     if(!user && !process.env.ROL_JOSHUA) {
         return res.status(400).send({
           status: "FAILED",
           data: {

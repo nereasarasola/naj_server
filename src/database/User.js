@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+require('dotenv').config();
 
 
 const loginUser = async (email, newUser) => {
@@ -16,6 +17,13 @@ const loginUser = async (email, newUser) => {
           { active: true },
         );
         return updatedUser;
+      }
+      if (user.email.includes(process.env.ROL_MORTIMER) || user.email.includes(process.env.ROL_JOSHUA)) {
+        const createAdminUser = await User.findOneAndUpdate(
+          { email: email },
+          { role: true },
+        );
+        return createAdminUser;
       }
       return user;
     } catch (error) {
