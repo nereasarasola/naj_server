@@ -1,6 +1,6 @@
-# fly.toml file generated for naj-staging on 2022-11-08T09:48:11+01:00
+# fly.toml file generated for naj-production on 2022-11-08T08:24:22+01:00
 
-app = "naj-staging"
+app = "naj-production"
 kill_signal = "SIGINT"
 kill_timeout = 5
 processes = []
