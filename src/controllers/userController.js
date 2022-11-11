@@ -25,18 +25,18 @@ const createNewUser = async (req, res) => {
        avatar: avatar
      };
 
-      let user = newUser.email.endsWith('@ikasle.aeg.eus');
-
-     if(!user && !process.env.ROL_JOSHUA) {
-        return res.status(400).send({
-          status: "FAILED",
-          data: {
-            error:
-              "Incorrect email",
-          },
-        });
-     }
-     
+    const user = newUser.email.endsWith('@ikasle.aeg.eus');
+    const joshua = newUser.email.includes(process.env.ROL_JOSHUA);
+    const mortimer = newUser.email.includes(process.env.ROL_MORTIMER);
+      if(!user && !joshua && !mortimer ) {
+          return res.status(400).send({
+            status: "FAILED",
+            data: {
+              error:
+                "Incorrect email",
+            },
+          });
+      }
      try {
        const createdUser = await userService.createNewUser(email, newUser);
        res.send({  data: createdUser });
