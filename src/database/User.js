@@ -1,11 +1,10 @@
 const User = require('../models/userModel');
 require('dotenv').config();
 
-
 const loginUser = async (email, newUser) => {
     try {
       const user = await User.findOne({ email: email });
-      
+
       if (!user) {
         let userToInsert = new User(newUser);
         const createdUser = await userToInsert.save();
@@ -18,12 +17,12 @@ const loginUser = async (email, newUser) => {
         );
         return updatedUser;
       }
-      if (user.email.includes(process.env.ROL_MORTIMER) || user.email.includes(process.env.ROL_JOSHUA)) {
-        const createAdminUser = await User.findOneAndUpdate(
+      if(user.email === process.env.ROL_MORTIMER && user.email === process.env.ROL_JOSHUA) {
+        const updateUser = await User.findOneAndUpdate(
           { email: email },
           { role: true },
         );
-        return createAdminUser;
+        return updateUser;
       }
       return user;
     } catch (error) {
@@ -62,7 +61,7 @@ const loginUser = async (email, newUser) => {
       return patcheduser;
     }
   }
-  
+
 module.exports = {
     loginUser,
     cryptEntry,

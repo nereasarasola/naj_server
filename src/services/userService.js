@@ -1,4 +1,5 @@
 const User = require("../database/User");
+require('dotenv').config();
 
 const createNewUser = async (idToken, newUser) => {
     try {
