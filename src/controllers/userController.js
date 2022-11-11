@@ -25,10 +25,11 @@ const createNewUser = async (req, res) => {
        avatar: avatar
      };
 
+    
     const user = newUser.email.endsWith('@ikasle.aeg.eus');
     const joshua = newUser.email.includes(process.env.ROL_JOSHUA);
     const mortimer = newUser.email.includes(process.env.ROL_MORTIMER);
-      if(!user && !joshua && !mortimer ) {
+      if(!user && !joshua && !mortimer) {
           return res.status(400).send({
             status: "FAILED",
             data: {
