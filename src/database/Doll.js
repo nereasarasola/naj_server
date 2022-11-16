@@ -1,4 +1,4 @@
-const doll = require('../models/dollModel');
+const Doll = require('../models/dollModel');
 require('dotenv').config();
 
 const createDoll = async (newDoll) => {

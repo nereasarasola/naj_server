@@ -15,8 +15,8 @@ const mongodbRoute = `mongodb+srv://${process.env.DATA_BASE_USER}:${process.env.
 app.use(bodyParser.json());
 
 app.use("/api/users", userRouter);
-app.use("/api/piece", pieceRouter);
-app.use("/api/doll", dollRouter);
+app.use("/api/pieces", pieceRouter);
+app.use("/api/dolls", dollRouter);
 
 async function start() {
     try

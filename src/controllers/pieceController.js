@@ -30,7 +30,7 @@ const createAllPieces = async (req, res) => {
 
 const allPieces = async (req, res) => {
   try {
-    const allPieces = await piecesService.allPieces();
+    const allPieces = await pieceService.allPieces();
     res.send({ data: allPieces });
   } catch (error) {
     res.status(error?.status || 500).send({

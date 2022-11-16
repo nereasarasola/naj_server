@@ -24,7 +24,7 @@ const createNewDoll = async (req, res) => {
 
 const allDolls = async (req, res) => {
   try {
-    const allDolls = await dollsService.allDolls();
+    const allDolls = await dollService.allDolls();
     res.send({  data: allDolls });
   } catch (error) {
     res.status(error?.status || 500).send({
