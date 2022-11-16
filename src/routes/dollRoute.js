@@ -1,6 +1,5 @@
 const express = require("express");
-const pieceController = require("../controllers/dollController");
-const middleWare = require("../middleWare/tokenAuth");
+const dollController = require("../controllers/dollController");
 const router = express.Router();
 
 router.post("/",dollController.createNewDoll);

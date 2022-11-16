@@ -5,8 +5,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const userRouter = require("./routes/userRoute");
-const userRouter = require("./routes/pieceRoute");
-const userRouter = require("./routes/dollRoute");
+const pieceRouter = require("./routes/pieceRoute");
+const dollRouter = require("./routes/dollRoute");
 const admin = require('firebase-admin');
 const serviceAccount = require("../auth-cc-naj-firebase-adminsdk-i0xus-b3d85aa2d9.json");
 const mongoose = require ('mongoose');
@@ -15,6 +15,8 @@ const mongodbRoute = `mongodb+srv://${process.env.DATA_BASE_USER}:${process.env.
 app.use(bodyParser.json());
 
 app.use("/api/users", userRouter);
+app.use("/api/piece", pieceRouter);
+app.use("/api/doll", dollRouter);
 
 async function start() {
     try

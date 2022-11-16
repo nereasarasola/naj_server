@@ -1,5 +1,6 @@
 const { application } = require("express");
 const pieceService = require("../services/pieceService");
+const dollService = require("../services/dollService")
 require("dotenv").config();
 
 
@@ -20,7 +21,7 @@ const insertPiece = async (req,res) => {
       });
     }
   };
-  
+
 const createAllPieces = async (req, res) => {
   array.map((currentPiece) => {
     insertPiece(req,res,currentPiece);

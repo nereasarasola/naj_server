@@ -1,10 +1,9 @@
 const express = require("express");
 const pieceController = require("../controllers/pieceController");
-const middleWare = require("../middleWare/tokenAuth");
 const router = express.Router();
 
-router.post("/:pieceName",pieceController.createNewPiece);
+router.post("/:pieceName",pieceController.createAllPieces);
 router.get("/",pieceController.allPieces);
-router.patch("/:pieceName",pieceController.patcPiece);
+router.patch("/:pieceName",pieceController.patchPiece);
 
 module.exports = router;
