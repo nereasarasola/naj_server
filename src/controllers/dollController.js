@@ -7,8 +7,8 @@ require('dotenv').config();
 const createNewDoll = async (req, res) => {
     const {} = req.body;
      const newDoll = {
-       missionStatus: started,
-       pieces:  [],
+       missionStatus: "started",
+       pieces:  [], 
      };
      try {
        const createdDoll = await dollService.createNewDoll(newDoll);

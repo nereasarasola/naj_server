@@ -1,4 +1,4 @@
-const Map = require("../database/Doll");
+const Doll = require("../database/Doll");
 require('dotenv').config();
 
 const createNewDoll = async (newDoll) => {

@@ -1,9 +1,9 @@
-const Map = require("../database/Piece");
+const Doll = require("../database/Piece");
 require('dotenv').config();
 
 const createNewPiece = async (newPiece) => {
     try {
-        const createdPiece = Piece.createPiece( newPiece);
+        const createdPiece = Piece.createPiece(newPiece);
         return createdPiece;
     } catch (error) {
         throw error;
