@@ -61,8 +61,22 @@ const patchDoll = async (req, res) => {
   }
 }
 
+const deleteDolls = async (req, res) => {
+  try {
+    const deleteDolls = await dollService.deleteDolls();
+    res.send({  data: deleteDolls });
+  } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Failed making the req: ",
+      data: { error: error?.message || error },
+    });
+  }
+}
+
 
 module.exports = {
+    deleteDolls,
     createNewDoll,
     allDolls,
     patchDoll

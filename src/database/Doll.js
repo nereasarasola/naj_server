@@ -1,4 +1,5 @@
 const Doll = require('../models/dollModel');
+const Piece = require('../models/pieceModel');
 require('dotenv').config();
 
 const createDoll = async (newDoll) => {
@@ -19,6 +20,10 @@ const createDoll = async (newDoll) => {
     return all;
   }
 
+  const deleteDolls = async()=>{
+    const deletedDoll = Doll.deleteMany()
+    return deletedDoll;
+  }
 
   const patchDollArray = async(pieceNames)=>{
     const doll = await Doll.find();
@@ -34,11 +39,12 @@ const createDoll = async (newDoll) => {
   }
 
   const patchDoll= async(changes)=>{
-    const piece = await Piece.find();
-    if(!piece){
+
+    const doll = await Doll.find();
+    if(!doll){
     return "Error 404"}
     else {
-      const patchedDoll = await Doll.update({},
+      const patchedDoll = await Doll.findOneAndUpdate({},
         {$set: changes},
         {new:true}
       );
@@ -46,7 +52,10 @@ const createDoll = async (newDoll) => {
     }
   }
 
+
+
 module.exports = {
+    deleteDolls,
     patchDollArray,
     createDoll,
     allDolls,

@@ -19,6 +19,11 @@ const createPiece = async (newPiece) => {
     return all;
   }
 
+  const deletePiece = async()=>{
+    const deletedPiece = Piece.deleteMany()
+    return deletedPiece;
+  }
+
   const onePiece= async(pieceName)=>{
     const one = Piece.findOne({ pieceName: pieceName });
     return one;
@@ -39,6 +44,7 @@ const createPiece = async (newPiece) => {
   }
 
 module.exports = {
+  deletePiece,
     onePiece,
     createPiece,
     allPieces,

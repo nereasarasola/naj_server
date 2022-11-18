@@ -40,6 +40,14 @@ const patchDoll = async(changes)=>{
     }
 }
 
+const deleteDolls = async() =>{
+    try {
+        const deleteDolls = Doll.deleteDolls();
+        const deletePiece = Piece.deletePiece()
+        return deleteDolls;
+    } catch (error) {
+        throw error;
+    }
+}
 
-
-module.exports = {createNewDoll,allDolls,patchDollArray,patchDoll}
+module.exports = {createNewDoll,allDolls,patchDollArray,patchDoll,deleteDolls}

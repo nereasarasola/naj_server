@@ -48,5 +48,13 @@ const patchPiece = async(pieceName,changes)=>{
     }
 }
 
+const deletePiece = async() =>{
+    try {
+        const deletePiece = Piece.deletePiece()
+        return deletePiece;
+    } catch (error) {
+        throw error;
+    }
+}
 
-module.exports = {allPieces,patchPiece,createAllPieces}
+module.exports = {allPieces,patchPiece,createAllPieces,deletePiece}
