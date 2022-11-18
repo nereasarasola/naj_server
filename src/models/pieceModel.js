@@ -3,7 +3,6 @@ const {Schema} = mongoose;
 
 const pieceSchema = new Schema({
   pieceName: String,
-  claimer: String,
   image: String,
   isFound: Boolean,
   position: {

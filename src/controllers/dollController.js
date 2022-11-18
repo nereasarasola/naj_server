@@ -1,6 +1,9 @@
 const { application } = require("express");
 const dollService = require("../services/dollService");
+const pieceService = require("../services/pieceService")
 require('dotenv').config();
+
+
 
 
 
@@ -11,8 +14,11 @@ const createNewDoll = async (req, res) => {
        pieces:  [], 
      };
      try {
+       
        const createdDoll = await dollService.createNewDoll(newDoll);
+
        res.send({  data: createdDoll });
+
      } catch (error) {
        res.status(error?.status || 500).send({
          status: "FAILED",
@@ -20,6 +26,7 @@ const createNewDoll = async (req, res) => {
          data: { error: error?.message || error },
        });
      } 
+
 }
 
 const allDolls = async (req, res) => {
@@ -53,6 +60,8 @@ const patchDoll = async (req, res) => {
     });
   }
 }
+
+
 module.exports = {
     createNewDoll,
     allDolls,

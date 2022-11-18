@@ -19,6 +19,11 @@ const createPiece = async (newPiece) => {
     return all;
   }
 
+  const onePiece= async(pieceName)=>{
+    const one = Piece.findOne({ pieceName: pieceName });
+    return one;
+  }
+
   const patchPiece= async(pieceName,changes)=>{
     const piece = await Piece.findOne({ pieceName: pieceName });
     if(!piece)
@@ -34,6 +39,7 @@ const createPiece = async (newPiece) => {
   }
 
 module.exports = {
+    onePiece,
     createPiece,
     allPieces,
     patchPiece

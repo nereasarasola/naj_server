@@ -20,14 +20,13 @@ const createDoll = async (newDoll) => {
   }
 
 
-  const patchDollArray = async()=>{
+  const patchDollArray = async(pieceNames)=>{
     const doll = await Doll.find();
     if(!doll){
     return "Error 404"}
     else {
-      console.log(dollName);
-      const patchedDoll = await Doll.Update({},
-        {$push: {pieces: _id}},
+      const patchedDoll = await Doll.update({},
+        {$push: {pieces: pieceNames}},
         {new:true}
       );
       return patchedDoll;
@@ -39,7 +38,7 @@ const createDoll = async (newDoll) => {
     if(!piece){
     return "Error 404"}
     else {
-      const patchedDoll = await Doll.Update({},
+      const patchedDoll = await Doll.update({},
         {$set: changes},
         {new:true}
       );

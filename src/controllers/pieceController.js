@@ -4,15 +4,29 @@ const dollService = require("../services/dollService")
 require("dotenv").config();
 
 
-const insertPiece = async (req,res) => {
+const insertPiece = async (req,res,currentPiece) => {
     const {} = req.body;
     const newPiece = {
-      pieceName: currentPiece.pieceName,
-      image: currentPiece.image,
+    pieceName:currentPiece.pieceName,
+    image:currentPiece.image,
+    isFound: false,
+    position: { 
+      latitude: null,
+      longitude: null,
+      latitudeDelta: null,
+      LongitudeDelta: null,
+    }
     };
     try {
-      const createdPiece = await pieceService.createNewPiece(newPiece);
-      res.send({ data: createdPiece });
+      const piecesArray = await pieceService.createNewPiece(newPiece);
+      console.log(piecesArray)
+
+      piecesArray.map((currentPiece) => {
+        console.log(currentPiece)
+        dollService.patchDollArray(currentPiece)
+
+      })
+      
     } catch (error) {
       res.status(error?.status || 500).send({
         status: "FAILED",
@@ -22,11 +36,7 @@ const insertPiece = async (req,res) => {
     }
   };
 
-const createAllPieces = async (req, res) => {
-  array.map((currentPiece) => {
-    insertPiece(req,res,currentPiece);
-  });
-};
+
 
 const allPieces = async (req, res) => {
   try {
@@ -58,7 +68,7 @@ const patchPiece = async (req, res) => {
   }
 };
 module.exports = {
-    createAllPieces,
+  insertPiece,
   allPieces,
   patchPiece,
 };

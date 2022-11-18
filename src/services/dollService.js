@@ -1,9 +1,13 @@
 const Doll = require("../database/Doll");
+const Piece = require("./pieceService")
 require('dotenv').config();
 
 const createNewDoll = async (newDoll) => {
     try {
         const createdDoll= Doll.createDoll(newDoll);
+        Piece.createAllPieces()
+
+
         return createdDoll;
     } catch (error) {
         throw error;
@@ -18,9 +22,9 @@ const allDolls = async() =>{
         throw error;
     }
 }
-const patchDollArray = async(id)=>{
+const patchDollArray = async(pieceName)=>{
     try {
-        const patchDollArray = Doll.patchDollArray(id);
+        const patchDollArray = Doll.patchDollArray(pieceName);
         return patchDollArray;
     } catch (error) {
         throw error;
