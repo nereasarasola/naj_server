@@ -4,35 +4,9 @@ require('dotenv').config();
 const data = require("../../assets/data")
 
 
-const createAllPieces = async () => {
-    try{
-        let names =  []
-    data.dollPieces.map((currentPiece) => {
-
-        const newPiece = {
-            pieceName:currentPiece.pieceName,
-            image:currentPiece.image,
-            isFound: false,
-            position: { 
-              latitude: null,
-              longitude: null,
-              latitudeDelta: null,
-              LongitudeDelta: null,
-            }
-            };
-
-        const createdPiece = Piece.createPiece(newPiece);
-        Doll.patchDollArray(currentPiece.pieceName)
-    });
-    
-} catch (error) {
-        throw error;
-  };
-
-}
-const allPieces = async() =>{
+const getAllPieces = async() =>{
     try {
-        const allPieces = Piece.allPieces();
+        const allPieces = Piece.getAllPieces();
         return allPieces;
     } catch (error) {
         throw error;
@@ -57,4 +31,7 @@ const deletePiece = async() =>{
     }
 }
 
-module.exports = {allPieces,patchPiece,createAllPieces,deletePiece}
+module.exports = {
+    getAllPieces,
+    patchPiece,
+    deletePiece}

@@ -4,13 +4,13 @@ const {Schema} = mongoose;
 const pieceSchema = new Schema({
   pieceName: String,
   image: String,
-  isFound: Boolean,
+  isFound: { type: Boolean, default: false },
   position: {
-    latitude: String,
-    longitude: String,
-    latitudeDelta: String,
-    LongitudeDelta: String,
+    latitude: { type: String, default: null },
+    longitude: { type: String, default: null },
+    latitudeDelta: { type: String, default: null },
+    longitudeDelta: { type: String, default: null },
   },
 });
 
-module.exports = mongoose.model("Piece", pieceSchema);
+module.exports = mongoose.model('Piece', pieceSchema);

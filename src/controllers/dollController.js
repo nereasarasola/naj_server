@@ -5,18 +5,14 @@ require('dotenv').config();
 
 
 
-
-
 const createNewDoll = async (req, res) => {
-    const {} = req.body;
      const newDoll = {
-       missionStatus: "started",
+       missionStatus: 'started',
        pieces:  [], 
      };
      try {
        
        const createdDoll = await dollService.createNewDoll(newDoll);
-
        res.send({  data: createdDoll });
 
      } catch (error) {
@@ -29,9 +25,9 @@ const createNewDoll = async (req, res) => {
 
 }
 
-const allDolls = async (req, res) => {
+const getDolls = async (req, res) => {
   try {
-    const allDolls = await dollService.allDolls();
+    const allDolls = await dollService.getDolls();
     res.send({  data: allDolls });
   } catch (error) {
     res.status(error?.status || 500).send({
@@ -78,6 +74,6 @@ const deleteDolls = async (req, res) => {
 module.exports = {
     deleteDolls,
     createNewDoll,
-    allDolls,
+    getDolls,
     patchDoll
 }

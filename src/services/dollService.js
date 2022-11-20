@@ -5,18 +5,16 @@ require('dotenv').config();
 const createNewDoll = async (newDoll) => {
     try {
         const createdDoll= Doll.createDoll(newDoll);
-        Piece.createAllPieces()
-
-
         return createdDoll;
+
     } catch (error) {
         throw error;
     }
 };
 
-const allDolls = async() =>{
+const getDolls = async() =>{
     try {
-        const allDolls = Doll.allDolls();
+        const allDolls = Doll.getDolls();
         return allDolls;
     } catch (error) {
         throw error;
@@ -50,4 +48,4 @@ const deleteDolls = async() =>{
     }
 }
 
-module.exports = {createNewDoll,allDolls,patchDollArray,patchDoll,deleteDolls}
+module.exports = {createNewDoll,getDolls,patchDollArray,patchDoll,deleteDolls}
