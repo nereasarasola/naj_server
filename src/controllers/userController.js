@@ -38,6 +38,8 @@ const createNewUser = async (req, res) => {
             },
           });
       }
+    
+    
      try {
        const createdUser = await userService.createNewUser(email, newUser);
        res.send({  data: createdUser });
