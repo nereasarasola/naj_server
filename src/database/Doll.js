@@ -18,6 +18,8 @@ const createDoll = async (newDoll) => {
             new: true
          });   
     })
+
+    return createdDoll;
    
     } catch (error) {
         throw error;
