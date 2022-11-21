@@ -3,6 +3,6 @@ const pieceController = require("../controllers/pieceController");
 const router = express.Router();
 
 router.get("/",pieceController.getAllPieces);
-router.patch("/:pieceName",pieceController.patchPiece);
+router.patch("/update/:pieceName",pieceController.patchPiece);
 
 module.exports = router;

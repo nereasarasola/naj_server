@@ -34,4 +34,5 @@ const deletePiece = async() =>{
 module.exports = {
     getAllPieces,
     patchPiece,
-    deletePiece}
+    deletePiece,
+}
