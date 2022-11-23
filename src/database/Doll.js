@@ -29,13 +29,18 @@ const createDoll = async (newDoll) => {
 
 const getDolls = async()=> {
 
-  const doll = Doll.findOne({name: 'Doll'});
-  if (!doll) {return 'Error 404'}
+  // const doll = Doll.findOne({name: 'Doll'});
+  // if (doll === null) {console.log('hola')}
   
-  else {
-    const result = Doll.find().populate('pieces');
-    return result;
-  }
+  // else {
+  //   const result = Doll.find().populate('pieces');
+  //   return result;
+  // }
+
+  Doll.findOne({name : 'Doll' }, function(err, result) {
+
+    console.log("result:"+result);
+    });
   
 }
 
