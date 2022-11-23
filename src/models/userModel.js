@@ -7,7 +7,7 @@ const userSchema = new Schema({
     email: String,
     active: Boolean,
     role: Boolean,
-    intoTheCryp: Boolean,
+    intoTheCrypt: Boolean,
     goldCoins: Number,
     livePoints: Number,
     avatar:String
