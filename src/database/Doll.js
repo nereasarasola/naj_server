@@ -28,15 +28,12 @@ const createDoll = async (newDoll) => {
 
 
 const getDolls = async()=> {
-
   const doll = Doll.findOne({name: 'Doll'});
   if (!doll) {return 'Error 404'}
-  
   else {
     const result = Doll.find().populate('pieces');
     return result;
   }
-  
 }
 
 const deleteDolls = async()=>{
