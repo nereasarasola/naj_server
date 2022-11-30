@@ -1,8 +1,19 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const http = require('http');
+const socketIO = require('socket.io');
 require('dotenv').config();
 const app = express();
+const server = http.createServer(app);
 const PORT = process.env.PORT || 3000;
+
+const io = socketIO(server, {
+    pingTimeout: 30000,
+    cors: {
+      origin: '*',
+    }
+  });
+  exports.socketIO = io;
 
 const userRouter = require("./routes/userRoute");
 const pieceRouter = require("./routes/pieceRoute");
@@ -17,6 +28,14 @@ app.use(bodyParser.json());
 app.use("/api/users", userRouter);
 app.use("/api/pieces", pieceRouter);
 app.use("/api/dolls", dollRouter);
+
+app.use(function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', "*");
+    res.header('Access-Control-Allow-Methods','GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    next();
+})
+
 
 async function start() {
     try
@@ -34,3 +53,6 @@ async function start() {
 }
 
 start();
+
+require('./services/sockets/socketMain');
+
