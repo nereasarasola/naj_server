@@ -41,8 +41,8 @@ async function start() {
     try
     {
         await mongoose.connect(mongodbRoute);
-        app.listen(PORT, () => {
-            console.log(`API is listening in port ${PORT}`)
+        server.listen(PORT, () => {
+            console.log(`Server activo en ${PORT}`);
         });
         console.log('Conexión con Mongo correcta.');
     }
@@ -53,6 +53,11 @@ async function start() {
 }
 
 start();
+
+
+app.get('/', (req, res) => {
+    res.send('Welcome to Absentia Staging Socket Service from CI')
+})
 
 require('./services/sockets/socketMain');
 
