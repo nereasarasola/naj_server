@@ -22,7 +22,11 @@ const createNewUser = async (req, res) => {
        intoTheCryp: false,
        goldCoins: 29,
        livePoints: 100,
-       avatar: avatar
+       avatar: avatar,
+       socketID: null,
+       fatigue: 100,
+       concentration: 100,
+       state: "awake"
      };
 
     const user = newUser.email.endsWith('@ikasle.aeg.eus');
