@@ -17,6 +17,21 @@ events = (socket) => {
     }
   });
 
+  //Check the data of the user
+  socket.on('acolite_details', async (data) => {
+
+    try {
+      const updatedUser = await User.patchUser(data.email, data.data);
+      console.log(updatedUser);
+      // socket.broadcast.emit('acolite_details', updatedUser);
+    } catch(error) {
+      console.log(error);
+      socket.broadcast.emit('acolite_detailsError', error);
+    }
+  });
+
+  
+
 
   
     

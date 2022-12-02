@@ -54,11 +54,13 @@ const loginUser = async (email, newUser) => {
     if(!user)
     return "Error 404"
     else {
+      console.log(changes);
       const patcheduser = await User.findOneAndUpdate({email:email},
         {$set: changes},
         {new:true}
       );
       return patcheduser;
+    
     }
   }
 
