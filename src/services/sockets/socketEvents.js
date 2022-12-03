@@ -1,4 +1,6 @@
 const User = require('../userService');
+const cron = require('node-cron');
+
 
 events = (socket) => {
 
@@ -23,11 +25,34 @@ events = (socket) => {
     try {
       const updatedUser = await User.patchUser(data.email, data.data);
       socket.broadcast.emit('acolite_details', updatedUser);
+
     } catch(error) {
       console.log(error);
       socket.broadcast.emit('acolite_detailsError', error);
     }
   });
+
+
+  //Cron
+  socket.on('changes', async () => {
+
+    try {
+      cron.schedule('1,2,4,5 * * * *', async () => {
+        const user = await User.allActiveUsers();
+        console.log('running every minute 1, 2, 4 and 5');
+        socket.broadcast.emit('changes', user);
+
+      });
+
+    } catch(error) {
+      console.log(error);
+      socket.broadcast.emit('changesError', error);
+    }
+  });
+ 
+
+
+  
 
 
 
