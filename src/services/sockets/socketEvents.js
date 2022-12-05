@@ -1,17 +1,91 @@
 const User = require('../userService');
 const cron = require('node-cron');
 
-
 events = (socket) => {
 
   //Connect
   console.log({ Clientsocket: socket.id });
-  /*socket.emit("new_user", socket.id);*/
+  socket.emit("new_user", socket.id);
+
+  //Check the value of fatigue and concentration
+  // let email = 'nerea.sarasola@ikasle.aeg.eus';
+  // let data = {socketID: socket.id};
+
+  // const currentUser = User.patchUser(email, data);
+  
+  //Cron every one hour to change the value of fatigue and concentration
+  cron.schedule('0 */1 * * * *', async () => {
+    try {
+      const users = await User.allActiveUsers();
+      users.map(async (user) => {
+        
+        switch(user.state) {
+
+          case 'awake':
+
+            if (user.fatigue === 20) {
+              let data = {
+                fatigue: user.fatigue - 5,
+                state: 'exhausted'
+              }
+              updateState = await User.patchUser(user.email, data);
+              console.log(`${user.name} va a entrar en el estado: ${data.state}`);
+            }
+
+            if (user.fatigue === 15) {
+              let data = {
+                fatigue: user.fatigue - 5,
+                state: 'fainted'
+              }
+              updateState = await User.patchUser(user.email, data);
+              console.log(`${user.name} va a entrar en el estado: ${data.state}`);
+            }
+
+          case 'sleep': 
+
+            if(user.fatigue <=10) {
+              socket.broadcast.emit('admin_message', user.email);
+              console.log(`${user.name} manda el mensaje a los admins`);
+            }
+          
+          default:
+            if (user.state === 'sleep') {
+              let data = {
+                fatigue: user.fatigue + 5,
+                
+              }
+              updateState = await User.patchUser(user.email, data);
+              console.log(`${user.name} tiene : ${data.fatigue} de fatigue`);
+            } 
+
+            else if (user.state != 'fainted' || user.fatigue === 10) {
+              let data = {
+                fatigue: user.fatigue - 5,
+              }
+              updateState = await User.patchUser(user.email, data);
+              console.log(`${user.name} tiene : ${data.fatigue} de fatigue`);
+
+            }
+
+        }
+      })
+
+      socket.broadcast.emit('state_acolite', 'Kaixo');
+
+
+    } catch(error) {
+      // console.log(error);
+      // socket.broadcast.emit('state_acoliteError', error);
+    }
+  });
+
+  
 
   //Check the state of the user
   socket.on('state_acolite', async (data) => {
     try {
-      const updatedUser = await User.patchUser(data.email, data.state);
+      console.log(data.data);
+      const updatedUser = await User.patchUser(data.email, data.data);
       socket.broadcast.emit('state_acolite', updatedUser);
     } catch(error) {
       console.log(error);
@@ -19,9 +93,8 @@ events = (socket) => {
     }
   });
 
-  //Check the data of the user
+  //Check the details of the user
   socket.on('acolite_details', async (data) => {
-
     try {
       const updatedUser = await User.patchUser(data.email, data.data);
       socket.broadcast.emit('acolite_details', updatedUser);
@@ -33,22 +106,7 @@ events = (socket) => {
   });
 
 
-  //Cron
-  socket.on('changes', async () => {
-
-    try {
-      cron.schedule('1,2,4,5 * * * *', async () => {
-        const user = await User.allActiveUsers();
-        console.log('running every minute 1, 2, 4 and 5');
-        socket.broadcast.emit('changes', user);
-
-      });
-
-    } catch(error) {
-      console.log(error);
-      socket.broadcast.emit('changesError', error);
-    }
-  });
+  
  
 
 

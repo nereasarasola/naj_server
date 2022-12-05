@@ -45,7 +45,7 @@ const loginUser = async (email, newUser) => {
     }
   }
   const allActiveUsers= async()=>{
-    const all = User.find({role: false},)
+    const all = User.find({role: false});
     return all;
   }
 
@@ -64,9 +64,10 @@ const loginUser = async (email, newUser) => {
     }
   }
 
+
 module.exports = {
     loginUser,
     cryptEntry,
     allActiveUsers,
-    patchUser
+    patchUser,
 };
