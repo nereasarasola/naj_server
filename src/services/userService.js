@@ -34,6 +34,15 @@ const patchUser = async(email,changes)=>{
         throw error;
     }
 }
+const updateAcoliteFatigueConcentration = async()=>{
+    try {
+        const updateAcoliteFatigueConcentration = User.updateAcoliteFatigueConcentration();
+        return updateAcoliteFatigueConcentration;
+    } catch (error) {
+        throw error;
+    }
+}
 
 
-module.exports = {createNewUser,cryptEntry,allActiveUsers,patchUser}
+
+module.exports = {createNewUser,cryptEntry,allActiveUsers,patchUser, updateAcoliteFatigueConcentration}

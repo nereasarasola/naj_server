@@ -12,8 +12,8 @@ const userSchema = new Schema({
   livePoints: Number,
   avatar: String,
   socketID: String,
-  fatigue: Number,
-  concentration: Number,
+  fatigue: { type: Number, min: 10, max: 100 },
+  concentration: { type: Number, min: 10, max: 100 },
   state: String,
 });
 

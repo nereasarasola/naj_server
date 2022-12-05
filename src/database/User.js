@@ -64,10 +64,28 @@ const loginUser = async (email, newUser) => {
     }
   }
 
+  const updateAcoliteFatigueConcentration = async()=>{
+    try {
+      const users = await User.updateMany(
+        {
+          $and: [
+            { role: false },
+            { status: "sleep" },]
+        },
+        
+        { $set: { fatigue : fatigue + 10  } }
+      );
+      
+      return users;
+    } catch (error) {
+        throw error;
+    }
+}
 
 module.exports = {
     loginUser,
     cryptEntry,
     allActiveUsers,
     patchUser,
+    updateAcoliteFatigueConcentration
 };

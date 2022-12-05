@@ -14,70 +14,70 @@ events = (socket) => {
   // const currentUser = User.patchUser(email, data);
   
   //Cron every one hour to change the value of fatigue and concentration
-  cron.schedule('0 */1 * * * *', async () => {
-    try {
-      const users = await User.allActiveUsers();
-      users.map(async (user) => {
+  // cron.schedule('0 */1 * * * *', async () => {
+  //   try {
+  //     const users = await User.allActiveUsers();
+  //     users.map(async (user) => {
         
-        switch(user.state) {
+  //       switch(user.state) {
 
-          case 'awake':
+  //         case 'awake':
 
-            if (user.fatigue === 20) {
-              let data = {
-                fatigue: user.fatigue - 5,
-                state: 'exhausted'
-              }
-              updateState = await User.patchUser(user.email, data);
-              console.log(`${user.name} va a entrar en el estado: ${data.state}`);
-            }
+  //           if (user.fatigue === 20) {
+  //             let data = {
+  //               fatigue: user.fatigue - 5,
+  //               state: 'exhausted'
+  //             }
+  //             updateState = await User.patchUser(user.email, data);
+  //             console.log(`${user.name} va a entrar en el estado: ${data.state}`);
+  //           }
 
-            if (user.fatigue === 15) {
-              let data = {
-                fatigue: user.fatigue - 5,
-                state: 'fainted'
-              }
-              updateState = await User.patchUser(user.email, data);
-              console.log(`${user.name} va a entrar en el estado: ${data.state}`);
-            }
+  //           if (user.fatigue === 15) {
+  //             let data = {
+  //               fatigue: user.fatigue - 5,
+  //               state: 'fainted'
+  //             }
+  //             updateState = await User.patchUser(user.email, data);
+  //             console.log(`${user.name} va a entrar en el estado: ${data.state}`);
+  //           }
 
-          case 'sleep': 
+  //         case 'sleep': 
 
-            if(user.fatigue <=10) {
-              socket.broadcast.emit('admin_message', user.email);
-              console.log(`${user.name} manda el mensaje a los admins`);
-            }
+  //           if(user.fatigue <=10) {
+  //             socket.broadcast.emit('admin_message', user.email);
+  //             console.log(`${user.name} manda el mensaje a los admins`);
+  //           }
           
-          default:
-            if (user.state === 'sleep') {
-              let data = {
-                fatigue: user.fatigue + 5,
+  //         default:
+  //           if (user.state === 'sleep') {
+  //             let data = {
+  //               fatigue: user.fatigue + 5,
                 
-              }
-              updateState = await User.patchUser(user.email, data);
-              console.log(`${user.name} tiene : ${data.fatigue} de fatigue`);
-            } 
+  //             }
+  //             updateState = await User.patchUser(user.email, data);
+  //             console.log(`${user.name} tiene : ${data.fatigue} de fatigue`);
+  //           } 
 
-            else if (user.state != 'fainted' || user.fatigue === 10) {
-              let data = {
-                fatigue: user.fatigue - 5,
-              }
-              updateState = await User.patchUser(user.email, data);
-              console.log(`${user.name} tiene : ${data.fatigue} de fatigue`);
+  //           else if (user.state != 'fainted' || user.fatigue === 10) {
+  //             let data = {
+  //               fatigue: user.fatigue - 5,
+  //             }
+  //             updateState = await User.patchUser(user.email, data);
+  //             console.log(`${user.name} tiene : ${data.fatigue} de fatigue`);
 
-            }
+  //           }
 
-        }
-      })
+  //       }
+  //     })
 
-      socket.broadcast.emit('state_acolite', 'Kaixo');
+  //     socket.broadcast.emit('state_acolite', 'Kaixo');
 
 
-    } catch(error) {
-      // console.log(error);
-      // socket.broadcast.emit('state_acoliteError', error);
-    }
-  });
+  //   } catch(error) {
+  //     // console.log(error);
+  //     // socket.broadcast.emit('state_acoliteError', error);
+  //   }
+  // });
 
   
 
