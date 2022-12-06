@@ -43,6 +43,15 @@ const updateAcoliteFatigueConcentration = async()=>{
     }
 }
 
+const updateAcoliteState = async()=>{
+    try {
+        const updateAcoliteState = User.updateAcoliteState();
+        return updateAcoliteState;
+    } catch (error) {
+        throw error;
+    }
+}
 
 
-module.exports = {createNewUser,cryptEntry,allActiveUsers,patchUser, updateAcoliteFatigueConcentration}
+
+module.exports = {createNewUser,cryptEntry,allActiveUsers,patchUser, updateAcoliteFatigueConcentration, updateAcoliteState}

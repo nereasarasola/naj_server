@@ -66,26 +66,52 @@ const loginUser = async (email, newUser) => {
 
   const updateAcoliteFatigueConcentration = async()=>{
     try {
-      const users = await User.updateMany(
-        {
-          $and: [
-            { role: false },
-            { status: "sleep" },]
-        },
-        
-        { $set: { fatigue : fatigue + 10  } }
-      );
       
-      return users;
+      const usersSleep = await User.updateMany(
+        {role:false , state: 'sleep'},
+        {
+          $inc: {
+            fatigue: 10,
+            concentration: 10
+          },
+        },
+      );
+      const usersAwake = await User.updateMany(
+        {role:false , state: 'awake', state: 'exhausted' },
+        {
+          $inc: {
+            fatigue: -10,
+            concentration: -10
+          },
+        },
+      );
     } catch (error) {
         throw error;
     }
 }
-
+const updateAcoliteState = async()=>{
+  try {
+    const usersExhausted = await User.updateMany(
+      {role:false , state: 'awake', fatigue:20},
+      {
+        state: 'exhausted'
+      },
+    );
+    const usersFainted = await User.updateMany(
+      {role:false , state: 'exhausted', fatigue:10},
+      {
+        state: 'fainted'
+      },
+    );
+  } catch (error) {
+      throw error;
+  }
+}
 module.exports = {
     loginUser,
     cryptEntry,
     allActiveUsers,
     patchUser,
-    updateAcoliteFatigueConcentration
+    updateAcoliteFatigueConcentration,
+    updateAcoliteState
 };
