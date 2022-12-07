@@ -68,7 +68,7 @@ const loginUser = async (email, newUser) => {
     try {
       
       const usersSleep = await User.updateMany(
-        {role:false , state: 'sleep'},
+        {role:false , state: 'sleep', fatigue: {$lt: 100}},
         {
           $inc: {
             fatigue: 10,
