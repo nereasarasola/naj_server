@@ -48,7 +48,7 @@ async function start() {
             console.log(`Server activo en ${PORT}`);
         });
         console.log('Conexión con Mongo correcta.');
-        //crone.job()
+        crone.job();
     }
     catch(error) 
     {

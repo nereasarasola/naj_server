@@ -81,11 +81,26 @@ const cryptEntry = async (req, res) => {
   }
 }
 
-const getAllAcolites = async (req, res) => {
+const getActiveAcolites = async (req, res) => {
   try {
-    const acolites = await userService.getAllAcolites();
+    const acolites = await userService.getActiveAcolites();
     res.send({  data: acolites });
   } catch (error) {
+    res.status(error?.status || 500).send({
+      status: "FAILED",
+      message: "Failed making the req: ",
+      data: { error: error?.message || error },
+    });
+  }
+}
+
+
+const getUserByEmail = async (req, res) => {
+  const {email} = req.params;
+  try {
+    const user = await userService.getUserByEmail(email);
+    res.send({ data: user});
+  } catch(error) {
     res.status(error?.status || 500).send({
       status: "FAILED",
       message: "Failed making the req: ",
@@ -98,7 +113,6 @@ const patchUser = async (req, res) => {
   const  {
     body,
     params:{email}
-
   } = req;
   try {
     const patchUser = await userService.patchUser(email,body);
@@ -114,6 +128,7 @@ const patchUser = async (req, res) => {
 module.exports = {
     createNewUser,
     cryptEntry,
-    getAllAcolites,
+    getActiveAcolites,
+    getUserByEmail,
     patchUser
 }

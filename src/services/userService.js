@@ -17,14 +17,25 @@ const cryptEntry = async (email,changes) => {
     } catch (error) {
         throw error;
     }
-};
-const getAllAcolites = async() =>{
+}
+
+const getActiveAcolites = async() => {
     try {
-        const allActiveUsers = User.getAllAcolites();
-        return allActiveUsers;
-    } catch (error) {
+        const activeAcolites = User.getActiveAcolites();
+        return activeAcolites;
+    } catch(error) {
         throw error;
     }
+}
+
+const getUserByEmail = async(email) => {
+    try {
+        const user = User.getUserByEmail(email);
+        return user;
+    } catch(error) {
+        throw error;
+    }
+
 }
 const patchUser = async(email,changes)=>{
     try {
@@ -54,4 +65,12 @@ const updateAcoliteState = async()=>{
 
 
 
-module.exports = {createNewUser,cryptEntry,getAllAcolites,patchUser, updateAcoliteFatigueConcentration, updateAcoliteState}
+module.exports = {
+    createNewUser,
+    cryptEntry,
+    getActiveAcolites,
+    getUserByEmail,
+    patchUser, 
+    updateAcoliteFatigueConcentration, 
+    updateAcoliteState
+};
