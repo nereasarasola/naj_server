@@ -44,9 +44,13 @@ const loginUser = async (email, newUser) => {
         return updatedUser;
     }
   }
-  const allActiveUsers= async()=>{
+  const getAllAcolites = async()=>{
     const all = User.find({role: false});
     return all;
+  }
+
+  const getAllUsers = async() => {
+    const users = User.find({})
   }
 
   const patchUser= async(email,changes)=>{
@@ -110,7 +114,7 @@ const updateAcoliteState = async()=>{
 module.exports = {
     loginUser,
     cryptEntry,
-    allActiveUsers,
+    getAllAcolites,
     patchUser,
     updateAcoliteFatigueConcentration,
     updateAcoliteState

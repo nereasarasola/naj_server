@@ -81,10 +81,10 @@ const cryptEntry = async (req, res) => {
   }
 }
 
-const allActiveUsers= async (req, res) => {
+const getAllAcolites = async (req, res) => {
   try {
-    const allActiveUsers = await userService.allActiveUsers();
-    res.send({  data: allActiveUsers });
+    const acolites = await userService.getAllAcolites();
+    res.send({  data: acolites });
   } catch (error) {
     res.status(error?.status || 500).send({
       status: "FAILED",
@@ -114,6 +114,6 @@ const patchUser = async (req, res) => {
 module.exports = {
     createNewUser,
     cryptEntry,
-    allActiveUsers,
+    getAllAcolites,
     patchUser
 }
