@@ -48,12 +48,12 @@ const loginUser = async (email, newUser) => {
     const all = User.find({role: false},)
     return all;
   }
+
   const patchUser= async(email,changes)=>{
     const user = await User.findOne({ email: email });
     if(!user)
     return "Error 404"
     else {
-      console.log(email);
       const patcheduser = await User.findOneAndUpdate({email:email},
         {$set: changes},
         {new:true}
