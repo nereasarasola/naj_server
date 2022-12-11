@@ -1,11 +1,6 @@
 const User = require('../userService');
-const cron = require('node-cron');
-
+const {NEW_CONNECTION, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR} = require('../../constants');
 events = async (socket) => {
-
-  //Connect
-  console.log({ Clientsocket: socket.id });
-  socket.emit("new_connection", socket.id);
 
   //Update the socketId of the user
   let email = 'nerea.sarasola@ikasle.aeg.eus';
@@ -14,47 +9,20 @@ events = async (socket) => {
 
   //Get the data of the current user
   const currentUser = await User.getUserByEmail(email);
+  socket.emit(NEW_CONNECTION, currentUser);
 
   //Check the state of the user
-  socket.on('state_acolite', async (data) => {
+  socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log(data.data);
       const updatedUser = await User.patchUser(data.email, data.data);
-      socket.broadcast.emit('state_acolite', updatedUser);
+      socket.broadcast.emit(ACOLITE_STATE, updatedUser);
     } catch(error) {
       console.log(error);
-      socket.broadcast.emit('state_acoliteError', error);
+      socket.broadcast.emit(ACOLITE_STATE_ERROR, error);
     }
   });
 
-  //Check the details of the user
-  socket.on('acolite_details', async (data) => {
-    try {
-      const updatedUser = await User.patchUser(data.email, data.data);
-      socket.broadcast.emit('acolite_details', updatedUser);
-
-    } catch(error) {
-      console.log(error);
-      socket.broadcast.emit('acolite_detailsError', error);
-    }
-  });
-
-
-  
- 
-
-
-  
-
-
-
-  
-
-
-  
-    
- 
-  
   // socket.on('disconnect', async () => {
   //   console.log('Client disconnected: ', socket.id); 
   //   //When the user is loged out, update the socketId to null

@@ -1,5 +1,6 @@
 const User = require('../models/userModel');
 require('dotenv').config();
+const {ERROR404, AWAKE, EXHAUSTED, FAINTED, SLEEP} = require('../constants')
 
 const loginUser = async (email, newUser) => {
     try {
@@ -33,7 +34,7 @@ const loginUser = async (email, newUser) => {
 const cryptEntry = async(email,changes) =>{
   const user = await User.findOne({ email: email });
   if(!user)
-  return "Error 404"
+  return ERROR404
   else{
     changes.intoTheCryp = !user.intoTheCrypt;
       const updatedUser = await User.findOneAndUpdate({email:email},
@@ -55,7 +56,7 @@ const getActiveAcolites = async()=>{
 
 const getUserByEmail = async(email) => {
   const user = await User.findOne({ email: email });
-  if (!user) return "Error 404"
+  if (!user) return ERROR404
   else {
     return user;
   }
@@ -65,7 +66,7 @@ const getUserByEmail = async(email) => {
 const patchUser= async(email,changes)=>{
   const user = await User.findOne({ email: email });
   if(!user)
-  return "Error 404"
+  return ERROR404
   else {
     const patcheduser = await User.findOneAndUpdate({email:email},
       {$set: changes},
@@ -78,49 +79,37 @@ const patchUser= async(email,changes)=>{
 
 const updateAcoliteFatigueConcentration = async()=>{
   try {
-    
     const usersSleep = await User.updateMany(
-      {role:false , state: 'sleep', fatigue: {$lt: 100}},
-      {
-        $inc: {
-          fatigue: 10,
-          concentration: 10
-        },
-      },
-    );
-    const usersAwake = await User.updateMany(
-      {role:false , state: 'awake', state: 'exhausted' },
-      {
-        $inc: {
-          fatigue: -10,
-          concentration: -10
-        },
-      },
-    );
+      {role:false , state: SLEEP, fatigue: {$lt: 100}},
+      { $inc: { fatigue: 10, concentration: 10}},);
+
+    const usersAwake = await User.updateMany( 
+      {role: false, state: AWAKE, fatigue: {$gt: 20}},
+      { $inc: { fatigue: -10, concentration: -10}});
+
+    const userExhausted = await User.updateMany(
+      {role: false, state: EXHAUSTED, $eq: {fatigue: 20}},
+      { $inc: { fatigue: -10, concentration: -10}});
   } catch (error) {
       throw error;
   }
 }
+
+
+
 const updateAcoliteState = async()=>{
-try {
-  const usersExhausted = await User.updateMany(
-    {role:false , state: 'awake', fatigue:20},
-    {
-      state: 'exhausted'
-    },
-  );
-  const usersFainted = await User.updateMany(
-    {role:false , state: 'exhausted', fatigue:10},
-    {
-      state: 'fainted'
-    },
-  );
-} catch (error) {
-    throw error;
-}
-}
+  try {
+    const usersExhausted = await User.updateMany(
+      {role:false, fatigue:20},
+      {state: EXHAUSTED},);
+    const usersFainted = await User.updateMany(
+      {role:false, fatigue:10},
+      {state: FAINTED},);
+  } catch (error) {
+      throw error;
+  }
 
-
+}
 module.exports = {
     loginUser,
     cryptEntry,
