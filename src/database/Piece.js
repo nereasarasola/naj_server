@@ -1,5 +1,6 @@
 const Piece = require('../models/pieceModel');
 require('dotenv').config();
+const {ERROR404} = require('../constants')
 
 const getAllPieces= async()=>{
   const all = Piece.find()
@@ -18,7 +19,7 @@ const onePiece= async(pieceName)=>{
 
 const patchPiece= async(pieceName,changes)=>{
   const piece = await Piece.findOne({ pieceName: pieceName });
-  if(!piece) return "Error 404";
+  if(!piece) return ERROR404;
   else {
     const patchedPiece = await Piece.findOneAndUpdate({pieceName:pieceName},
       {$set: changes},

@@ -1,13 +1,12 @@
-const { application } = require("express");
 const dollService = require("../services/dollService");
-const pieceService = require("../services/pieceService")
 require('dotenv').config();
+const {STARTED, STATUS, MESSAGE} = require('../constants');
 
 
 
-const createNewDoll = async (req, res) => {
+const createNewDoll = async (res) => {
      const newDoll = {
-       missionStatus: 'started',
+       missionStatus: STARTED,
        pieces:  [], 
      };
      try {
@@ -17,8 +16,8 @@ const createNewDoll = async (req, res) => {
 
      } catch (error) {
        res.status(error?.status || 500).send({
-         status: "FAILED",
-         message: "Failed making the req: ",
+         status: STATUS,
+         message: MESSAGE,
          data: { error: error?.message || error },
        });
      } 
@@ -31,8 +30,8 @@ const getDolls = async (req, res) => {
     res.send({  data: allDolls });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }
@@ -43,28 +42,27 @@ const getDolls = async (req, res) => {
 const patchDoll = async (req, res) => {
   const  {
     body
-
   } = req;
   try {
     const patchDoll = await dollService.patchDoll(body);
     res.send({  data: patchDoll });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }
 }
 
-const deleteDolls = async (req, res) => {
+const deleteDolls = async (res) => {
   try {
     const deleteDolls = await dollService.deleteDolls();
     res.send({  data: deleteDolls });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }
