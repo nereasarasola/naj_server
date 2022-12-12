@@ -11,7 +11,7 @@ const userSchema = new Schema({
   goldCoins: Number,
   livePoints: Number,
   avatar: String,
-  socketID: String,
+  socketID: {type: String, default: "not_connected"},
   fatigue: { type: Number, min: 10, max: 100 },
   concentration: { type: Number, min: 10, max: 100 },
   state: String,
