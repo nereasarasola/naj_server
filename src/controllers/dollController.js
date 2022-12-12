@@ -4,7 +4,7 @@ const {STARTED, STATUS, MESSAGE} = require('../constants');
 
 
 
-const createNewDoll = async (res) => {
+const createNewDoll = async (req, res) => {
      const newDoll = {
        missionStatus: STARTED,
        pieces:  [], 
@@ -55,7 +55,7 @@ const patchDoll = async (req, res) => {
   }
 }
 
-const deleteDolls = async (res) => {
+const deleteDolls = async (req, res) => {
   try {
     const deleteDolls = await dollService.deleteDolls();
     res.send({  data: deleteDolls });
