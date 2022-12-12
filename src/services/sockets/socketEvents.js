@@ -1,15 +1,19 @@
 const User = require('../userService');
-const {NEW_CONNECTION, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR} = require('../../constants');
+const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR} = require('../../constants');
 events = async (socket) => {
 
   //Update the socketId of the user
-  let email = 'nerea.sarasola@ikasle.aeg.eus';
-  let data = {socketID: socket.id};
-  await User.patchUser(email, data);
-
-  //Get the data of the current user
-  const currentUser = await User.getUserByEmail(email);
-  socket.emit(NEW_CONNECTION, currentUser);
+  socket.on(NEW_CONNECTION, async (data) => {
+    try {
+      console.log(data.data);
+      const updatedUser = await User.patchUser(data.email, data.data);
+      socket.broadcast.emit(NEW_CONNECTION, updatedUser);
+    } catch(error) {
+      console.log(error);
+      socket.broadcast.emit(NEW_CONNECTION_ERROR, error);
+    }
+  });
+  
 
   //Check the state of the user
   socket.on(ACOLITE_STATE, async (data) => {

@@ -22,6 +22,7 @@ const ERROR404 = "Error 404";
 
 //Sockets
 const NEW_CONNECTION = 'new_connection';
+const NEW_CONNECTION_ERROR = 'new_connectionError';
 const DISCONNECTION = 'disconnect';
 const ACOLITE_STATE = 'acolite_state';
 const ACOLITE_STATE_ERROR = 'acolite_stateError'
@@ -45,6 +46,7 @@ module.exports = {
     FAINTED,
     ERROR404,
     NEW_CONNECTION,
+    NEW_CONNECTION_ERROR,
     DISCONNECTION,
     ACOLITE_STATE,
     ACOLITE_STATE_ERROR,
