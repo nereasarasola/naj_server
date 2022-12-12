@@ -3,10 +3,12 @@ const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLI
 events = async (socket) => {
 
   //Update the socketId of the user
+  console.log({New_socket: socket.id})
+
   socket.on(NEW_CONNECTION, async (data) => {
+    const body = {socketID: socket.id};
     try {
-      console.log(data.data);
-      const updatedUser = await User.patchUser(data.email, data.data);
+      const updatedUser = await User.patchUser(data.email, body);
       socket.broadcast.emit(NEW_CONNECTION, updatedUser);
     } catch(error) {
       console.log(error);
