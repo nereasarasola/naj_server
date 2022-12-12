@@ -1,15 +1,14 @@
-const { application } = require("express");
 const userService = require("../services/userService");
 require('dotenv').config();
+const {STATUS, MESSAGE, MISSING_NAME_EMAIL, INCORRENCT_EMAIL, AWAKE, MISSING_EMAIL} = require('../constants')
 
 const createNewUser = async (req, res) => {
     const { idToken, name, email,avatar } = req.body;
      if (!name || !email) {
        return res.status(400).send({
-         status: "FAILED",
+         status: STATUS,
          data: {
-           error:
-             "One of the following keys is missing or is empty in request body: 'name', 'mail'",
+           error: MISSING_NAME_EMAIL,
          },
        });
      }
@@ -22,7 +21,11 @@ const createNewUser = async (req, res) => {
        intoTheCryp: false,
        goldCoins: 29,
        livePoints: 100,
-       avatar: avatar
+       avatar: avatar,
+       socketID: null,
+       fatigue: 100,
+       concentration: 100,
+       state: AWAKE
      };
 
     
@@ -31,10 +34,10 @@ const createNewUser = async (req, res) => {
     const mortimer = newUser.email.includes(process.env.ROL_MORTIMER);
       if(!user && !joshua && !mortimer) {
           return res.status(400).send({
-            status: "FAILED",
+            status: STATUS,
             data: {
               error:
-                "Incorrect email",
+                INCORRENCT_EMAIL,
             },
           });
       }
@@ -45,8 +48,8 @@ const createNewUser = async (req, res) => {
        res.send({  data: createdUser });
      } catch (error) {
        res.status(error?.status || 500).send({
-         status: "FAILED",
-         message: "Failed making the req: ",
+         status: STATUS,
+         message: MESSAGE,
          data: { error: error?.message || error },
        });
      } 
@@ -58,10 +61,9 @@ const cryptEntry = async (req, res) => {
   } = req;
   if (!email) {
     return res.status(400).send({
-      status: "FAILED",
+      status: STATUS,
       data: {
-        error:
-          "One of the following keys is missing or is empty in request body:'email'",
+        error: MISSING_EMAIL
       },
     });
     
@@ -71,21 +73,36 @@ const cryptEntry = async (req, res) => {
     res.send({  data: userEntry });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }
 }
 
-const allActiveUsers= async (req, res) => {
+const getActiveAcolites = async (req, res) => {
   try {
-    const allActiveUsers = await userService.allActiveUsers();
-    res.send({  data: allActiveUsers });
+    const acolites = await userService.getActiveAcolites();
+    res.send({  data: acolites });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
+      data: { error: error?.message || error },
+    });
+  }
+}
+
+
+const getUserByEmail = async (req, res) => {
+  const {email} = req.params;
+  try {
+    const user = await userService.getUserByEmail(email);
+    res.send({ data: user});
+  } catch(error) {
+    res.status(error?.status || 500).send({
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }
@@ -95,15 +112,14 @@ const patchUser = async (req, res) => {
   const  {
     body,
     params:{email}
-
   } = req;
   try {
     const patchUser = await userService.patchUser(email,body);
     res.send({  data: patchUser });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }
@@ -111,6 +127,7 @@ const patchUser = async (req, res) => {
 module.exports = {
     createNewUser,
     cryptEntry,
-    allActiveUsers,
+    getActiveAcolites,
+    getUserByEmail,
     patchUser
 }

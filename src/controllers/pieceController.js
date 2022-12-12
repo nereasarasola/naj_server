@@ -1,6 +1,6 @@
-const { application } = require("express");
 const pieceService = require("../services/pieceService");
 require("dotenv").config();
+const {STATUS, MESSAGE} = require('../constants');
 
 
 
@@ -10,8 +10,8 @@ const getAllPieces = async (req, res) => {
     res.send({ data: allPieces });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }
@@ -27,8 +27,8 @@ const patchPiece = async (req, res) => {
     res.send({ data: patchPiece });
   } catch (error) {
     res.status(error?.status || 500).send({
-      status: "FAILED",
-      message: "Failed making the req: ",
+      status: STATUS,
+      message: MESSAGE,
       data: { error: error?.message || error },
     });
   }

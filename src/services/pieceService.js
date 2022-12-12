@@ -1,7 +1,5 @@
 const Piece = require("../database/Piece");
-const Doll = require("../database/Doll");
 require('dotenv').config();
-const data = require("../../assets/data")
 
 
 const getAllPieces = async() =>{

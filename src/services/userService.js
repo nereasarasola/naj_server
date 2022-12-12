@@ -17,14 +17,25 @@ const cryptEntry = async (email,changes) => {
     } catch (error) {
         throw error;
     }
-};
-const allActiveUsers = async() =>{
+}
+
+const getActiveAcolites = async() => {
     try {
-        const allActiveUsers = User.allActiveUsers();
-        return allActiveUsers;
-    } catch (error) {
+        const activeAcolites = User.getActiveAcolites();
+        return activeAcolites;
+    } catch(error) {
         throw error;
     }
+}
+
+const getUserByEmail = async(email) => {
+    try {
+        const user = User.getUserByEmail(email);
+        return user;
+    } catch(error) {
+        throw error;
+    }
+
 }
 const patchUser = async(email,changes)=>{
     try {
@@ -34,6 +45,32 @@ const patchUser = async(email,changes)=>{
         throw error;
     }
 }
+const updateAcoliteFatigueConcentration = async()=>{
+    try {
+        const updateAcoliteFatigueConcentration = User.updateAcoliteFatigueConcentration();
+        return updateAcoliteFatigueConcentration;
+    } catch (error) {
+        throw error;
+    }
+}
+
+const updateAcoliteState = async()=>{
+    try {
+        const updateAcoliteState = User.updateAcoliteState();
+        return updateAcoliteState;
+    } catch (error) {
+        throw error;
+    }
+}
 
 
-module.exports = {createNewUser,cryptEntry,allActiveUsers,patchUser}
+
+module.exports = {
+    createNewUser,
+    cryptEntry,
+    getActiveAcolites,
+    getUserByEmail,
+    patchUser, 
+    updateAcoliteFatigueConcentration, 
+    updateAcoliteState
+};
