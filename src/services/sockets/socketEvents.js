@@ -55,7 +55,7 @@ events = async (socket) => {
   })
 
   socket.on(DOLL_DETAILS, async (data) => {
-    try {
+    try {      
       const updatedDoll = Piece.patchPiece(data.pieceName, data.data);
     } catch(error) {
       console.log(error);

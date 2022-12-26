@@ -20,14 +20,6 @@ const getDolls = async() =>{
         throw error;
     }
 }
-const patchDollArray = async(pieceName)=>{
-    try {
-        const patchDollArray = Doll.patchDollArray(pieceName);
-        return patchDollArray;
-    } catch (error) {
-        throw error;
-    }
-}
 
 const patchDoll = async(changes)=>{
     try {
@@ -48,4 +40,4 @@ const deleteDolls = async() =>{
     }
 }
 
-module.exports = {createNewDoll,getDolls,patchDollArray,patchDoll,deleteDolls}
+module.exports = {createNewDoll,getDolls,patchDoll,deleteDolls}

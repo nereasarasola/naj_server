@@ -46,19 +46,6 @@ const deleteDolls = async()=>{
   return deletedDoll;
 }
 
-const patchDollArray = async(pieceNames)=>{
-  const doll = await Doll.find();
-  if(!doll){
-  return ERROR404}
-  else {
-    const patchedDoll = await Doll.update({},
-      {$push: {pieces: pieceNames}},
-      {new:true}
-    );
-    return patchedDoll;
-  }
-}
-
 const patchDoll= async(changes)=>{
 
   const doll = await Doll.find();
@@ -77,7 +64,6 @@ const patchDoll= async(changes)=>{
 
 module.exports = {
     deleteDolls,
-    patchDollArray,
     createDoll,
     getDolls,
     patchDoll,
