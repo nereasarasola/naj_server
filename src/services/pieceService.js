@@ -1,7 +1,5 @@
 const Piece = require("../database/Piece");
-const Doll = require("../database/Doll");
 require('dotenv').config();
-const data = require("../../assets/data")
 
 
 const getAllPieces = async() =>{
@@ -22,6 +20,15 @@ const patchPiece = async(pieceName,changes)=>{
     }
 }
 
+const patchAllPiecesByName = async() => {
+    try {
+        const pieces = Piece.patchAllPiecesByName();
+        return pieces;
+    } catch(error) {
+        throw error;
+    }
+}
+
 const deletePiece = async() =>{
     try {
         const deletePiece = Piece.deletePiece()
@@ -34,5 +41,6 @@ const deletePiece = async() =>{
 module.exports = {
     getAllPieces,
     patchPiece,
+    patchAllPiecesByName,
     deletePiece,
 }

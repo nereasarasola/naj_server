@@ -1,26 +1,46 @@
 const admin = require('firebase-admin')
-const {initializeApp, applicationDefault} =require ('firebase-admin/app');
+const {applicationDefault} =require ('firebase-admin/app');
+const {PROJECT_ID, STATUS, INCORRENCT_TOKEN, INCORRECT_DATA} = require('../constants')
 
-const firebase = admin.initializeApp({
-  
+const firebase = admin.initializeApp ({
   credential: applicationDefault(),
-   projectId:  'auth-cc-naj'
+  projectId:  PROJECT_ID
 });
 
-async function verify (req,res,next) {
-    const {idToken} = req.body;
-    try {
-     let decodedToken = await firebase.auth().verifyIdToken(idToken)
-     return next()
-    } catch (e) {
-     console.log(e)
-     return res.status(400).send({
-        status: "FAILED",
-        data: {
-          error:
-            "Incorrect Token",
-        }
-    })}
-   }
+// async function verifyUser (req, res, next) {
+//   const {email,name,avatar}= req.body;
+//   try {
+//     const newUser = await firebase.auth().createUser({
+//       email: email,
+//       displayName:name,
+//       photoURL: avatar
+//     })      
+//     if (newUser) return next();
+//   } catch (error) {
+//     console.log(error.errorInfo)
+//     return res.status(400).send({
+//       status: STATUS,
+//       data: { error: INCORRECT_DATA}
+//   })}
+// }
+  
 
-   module.exports = {verify}
+async function verifyIdToken (req,res,next) {
+  const {idToken} = req.body;
+  try {
+    const decodedToken = await firebase.auth().verifyIdToken(idToken);
+    if (decodedToken) return next();
+    
+  } catch (error) {
+    return res.status(400).send({
+      status: STATUS,
+      data: {
+        error:
+          INCORRENCT_TOKEN,
+      }
+  })}
+}
+
+
+
+module.exports = {verifyIdToken}

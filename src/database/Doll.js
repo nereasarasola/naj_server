@@ -2,6 +2,7 @@ const Doll = require('../models/dollModel');
 const Piece = require('../models/pieceModel');
 const piecesData = require('../../assets/data');
 require('dotenv').config();
+const {STARTED, ERROR404} = require('../constants');
 
 const createDoll = async (newDoll) => {
     try {
@@ -12,7 +13,7 @@ const createDoll = async (newDoll) => {
         piecesData.dollPieces.map(async (item) => {      
           let dollPiecesToInsert = new Piece(item);      
           const createdDollPiece = await dollPiecesToInsert.save(); 
-          const filter = {missionStatus: 'started'};
+          const filter = {missionStatus: STARTED};
           const update = {$push: { pieces: createdDollPiece._id }};   
           const doll = await Doll.findOneAndUpdate( filter, update, {
             new: true
@@ -29,7 +30,11 @@ const createDoll = async (newDoll) => {
 
 const getDolls = async()=> {
   const doll = Doll.findOne({name: 'Doll'});
+<<<<<<< HEAD
   if (!doll) {return 'Error 404'}
+=======
+  if (!doll) {return ERROR404}
+>>>>>>> 7da30ebcfc3adf7d9a7faac23b09489e753b4268
   else {
     const result = Doll.find().populate('pieces');
     return result;
@@ -44,7 +49,7 @@ const deleteDolls = async()=>{
 const patchDollArray = async(pieceNames)=>{
   const doll = await Doll.find();
   if(!doll){
-  return "Error 404"}
+  return ERROR404}
   else {
     const patchedDoll = await Doll.update({},
       {$push: {pieces: pieceNames}},
@@ -58,7 +63,7 @@ const patchDoll= async(changes)=>{
 
   const doll = await Doll.find();
   if(!doll){
-  return "Error 404"}
+  return ERROR404}
   else {
     const patchedDoll = await Doll.findOneAndUpdate({},
       {$set: changes},
