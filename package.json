@@ -25,10 +25,7 @@
     "express": "^4.18.2",
     "firebase-admin": "^11.2.0",
     "mongoose": "^6.6.6",
-<<<<<<< HEAD
-=======
     "node-cron": "^3.0.2",
->>>>>>> 7da30ebcfc3adf7d9a7faac23b09489e753b4268
     "node-fetch": "^3.2.10",
     "socket.io": "^4.5.4"
   },

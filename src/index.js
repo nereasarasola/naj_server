@@ -39,10 +39,6 @@ app.use(function(req, res, next) {
 })
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 7da30ebcfc3adf7d9a7faac23b09489e753b4268
 async function start() {
     try
     {
