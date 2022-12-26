@@ -7,7 +7,7 @@ const {STARTED, STATUS, MESSAGE} = require('../constants');
 const createNewDoll = async (req, res) => {
      const newDoll = {
        missionStatus: STARTED,
-       pieces:  [], 
+       pieces: [], 
      };
      try {
        
