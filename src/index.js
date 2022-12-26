@@ -57,7 +57,6 @@ async function start() {
 
 start();
 
-
 app.get('/', (req, res) => {
     res.send('Welcome to Absentia Staging Socket Service from CI')
 })
