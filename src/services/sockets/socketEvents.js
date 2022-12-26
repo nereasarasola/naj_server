@@ -1,6 +1,10 @@
 const User = require('../userService');
-const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR} = require('../../constants');
+const Doll = require('../dollService');
+const Piece = require('../pieceService');
+const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR} = require('../../constants');
 events = async (socket) => {
+
+  /* USER */
 
   //Update the socketId of the user
   console.log({New_socket: socket.id})
@@ -39,6 +43,31 @@ events = async (socket) => {
 
   // });
   
+
+  /* DOLL */
+  socket.on(MISSION_STATUS, async (data) => {
+    try {
+      const updatedDoll = Doll.patchDoll(data.data);
+    } catch(error) {
+      console.log(error);
+      socket.emit(MISSION_STATUS_ERROR, error);
+    }
+  })
+
+  socket.on(DOLL_DETAILS, async (data) => {
+    try {
+      console.log(data.data)
+      
+      const updatedDoll = Piece.patchPiece(data.pieceName, data.data);
+      console.log(updatedDoll);
+    } catch(error) {
+      console.log(error);
+      socket.emit(DOLL_DETAILS_ERROR, error);
+    }
+  })
+  
+
+
 }
   
 exports.socketEvents = events;
