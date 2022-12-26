@@ -22,17 +22,10 @@ const createNewUser = async (req, res) => {
        goldCoins: 29,
        livePoints: 100,
        avatar: avatar,
-<<<<<<< HEAD
-       socketID: null,
-       fatigue: 100,
-       concentration: 100,
-       state: "awake"
-=======
        socketID: "not_connected",
        fatigue: 100,
        concentration: 100,
        state: AWAKE
->>>>>>> 7da30ebcfc3adf7d9a7faac23b09489e753b4268
      };
 
     
