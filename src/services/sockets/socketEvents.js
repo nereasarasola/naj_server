@@ -25,8 +25,13 @@ events = async (socket) => {
   socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log({Acolite_state: data.data});
+
       const updatedUser = await User.patchUser(data.email, data.data);
-      socket.broadcast.emit(ACOLITE_STATE, updatedUser);
+      const setState = await User.updateAcoliteState();
+      const getCurrentAcolite = await User.getUserByEmail(data.email);
+
+      socket.broadcast.emit(ACOLITE_STATE, getCurrentAcolite);
+      
     } catch(error) {
       console.log(error);
       socket.broadcast.emit(ACOLITE_STATE_ERROR, error);
@@ -49,7 +54,6 @@ events = async (socket) => {
     try {
       console.log({MissionStatus: data.data});
       const updatedDoll = await Doll.patchDoll(data.data);
-      console.log(updatedDoll);
       socket.broadcast.emit(MISSION_STATUS, updatedDoll);
     } catch(error) {
       console.log(error);

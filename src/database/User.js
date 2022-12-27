@@ -105,6 +105,7 @@ const updateAcoliteState = async()=>{
     const usersFainted = await User.updateMany(
       {role:false, fatigue:10},
       {state: FAINTED},);
+    return usersExhausted;
   } catch (error) {
       throw error;
   }
