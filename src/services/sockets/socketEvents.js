@@ -48,6 +48,7 @@ events = async (socket) => {
   socket.on(MISSION_STATUS, async (data) => {
     try {
       const updatedDoll = Doll.patchDoll(data.data);
+      socket.emit(MISSION_STATUS, updatedDoll);
     } catch(error) {
       console.log(error);
       socket.emit(MISSION_STATUS_ERROR, error);
@@ -57,6 +58,7 @@ events = async (socket) => {
   socket.on(DOLL_DETAILS, async (data) => {
     try {      
       const updatedDoll = Piece.patchPiece(data.pieceName, data.data);
+      socket.emit(DOLL_DETAILS, updatedDoll);
     } catch(error) {
       console.log(error);
       socket.emit(DOLL_DETAILS_ERROR, error);
