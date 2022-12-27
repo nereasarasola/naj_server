@@ -24,7 +24,7 @@ events = async (socket) => {
   //Check the state of the user
   socket.on(ACOLITE_STATE, async (data) => {
     try {
-      console.log(data.data);
+      console.log({Acolite_state: data.data});
       const updatedUser = await User.patchUser(data.email, data.data);
       socket.broadcast.emit(ACOLITE_STATE, updatedUser);
     } catch(error) {
@@ -47,6 +47,7 @@ events = async (socket) => {
   /* DOLL */
   socket.on(MISSION_STATUS, async (data) => {
     try {
+      console.log({MissionStatus: data.data});
       const updatedDoll = Doll.patchDoll(data.data);
     } catch(error) {
       console.log(error);
@@ -56,6 +57,7 @@ events = async (socket) => {
 
   socket.on(DOLL_DETAILS, async (data) => {
     try {      
+      console.log({Dolldetails: data.data});
       const updatedDoll = Piece.patchPiece(data.pieceName, data.data);
     } catch(error) {
       console.log(error);
