@@ -52,8 +52,7 @@ const patchDoll= async(changes)=>{
       {$set: changes},
       {new:true}
     );
-    // return patchedDoll;
-    console.log(patchedDoll);
+    return patchedDoll;
   }
 }
 
