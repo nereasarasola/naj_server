@@ -30,11 +30,7 @@ const createDoll = async (newDoll) => {
 
 const getDolls = async()=> {
   const doll = Doll.findOne({name: 'Doll'});
-<<<<<<< HEAD
-  if (!doll) {return 'Error 404'}
-=======
   if (!doll) {return ERROR404}
->>>>>>> 7da30ebcfc3adf7d9a7faac23b09489e753b4268
   else {
     const result = Doll.find().populate('pieces');
     return result;
