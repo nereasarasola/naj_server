@@ -48,7 +48,7 @@ events = async (socket) => {
   socket.on(MISSION_STATUS, async (data) => {
     try {
       console.log({MissionStatus: data.data});
-      const updatedDoll = Doll.patchDoll(data.data);
+      const updatedDoll = await Doll.patchDoll(data.data);
       console.log(updatedDoll);
       socket.broadcast.emit(MISSION_STATUS, updatedDoll);
     } catch(error) {
@@ -60,7 +60,7 @@ events = async (socket) => {
   socket.on(DOLL_DETAILS, async (data) => {
     try {      
       console.log({Dolldetails: data.data});
-      const updatedDoll = Piece.patchPiece(data.pieceName, data.data);
+      const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
       socket.broadcast.emit(DOLL_DETAILS, updatedDoll);
     } catch(error) {
       console.log(error);
