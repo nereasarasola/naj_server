@@ -3,9 +3,10 @@ const userController = require("../controllers/userController");
 const middleWare = require("../middleWare/tokenAuth");
 const router = express.Router();
 
-router.post("/",middleWare.verify,userController.createNewUser);
+router.get("/", userController.getActiveAcolites);
+router.get("/:email", userController.getUserByEmail);
+router.post("/", middleWare.verifyIdToken, userController.createNewUser);
 router.patch("/cryptEntry/:email",userController.cryptEntry);
-router.get("/",userController.allActiveUsers);
-router.patch("/:email",userController.patchUser);
+router.patch("/update/:email",userController.patchUser);
 
 module.exports = router;
