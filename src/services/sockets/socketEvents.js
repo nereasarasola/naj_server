@@ -53,7 +53,7 @@ events = async (socket) => {
   socket.on(MISSION_STATUS, async (data) => {
     try {
       console.log({MissionStatus: data.data});
-      const updatedDoll = await Doll.patchDoll(data.data);
+      const updatedDoll = await Doll.patchDoll(data);
       socket.broadcast.emit(MISSION_STATUS, updatedDoll);
     } catch(error) {
       console.log(error);
