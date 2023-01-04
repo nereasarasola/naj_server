@@ -45,7 +45,7 @@ events = async (socket) => {
       const intoTheCrypt = data.data.intoTheCrypt;
       console.log(`${email}'s intoTheCrypt: ${intoTheCrypt}`);
 
-      const updatedUser = await User.cryptEntry(email);
+      const updatedUser = await User.cryptEntry(email, intoTheCrypt);
       socket.broadcast.emit(SCANNED_ACOLITE, updatedUser);
 
     } catch(error) {
