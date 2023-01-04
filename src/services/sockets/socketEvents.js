@@ -1,7 +1,9 @@
 const User = require('../userService');
 const Doll = require('../dollService');
 const Piece = require('../pieceService');
-const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR} = require('../../constants');
+const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR, SCANNED_ACOLITE, SCANNED_ACOLITE_ERROR
+
+} = require('../../constants');
 events = async (socket) => {
 
   /* USER */
@@ -19,13 +21,11 @@ events = async (socket) => {
       socket.broadcast.emit(NEW_CONNECTION_ERROR, error);
     }
   });
-  
 
   //Check the state of the user
   socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log({Acolite_state: data.data});
-
       const updatedUser = await User.patchUser(data.email, data.data);
       const setState = await User.updateAcoliteState();
       const getCurrentAcolite = await User.getUserByEmail(data.email);
@@ -37,6 +37,23 @@ events = async (socket) => {
       socket.broadcast.emit(ACOLITE_STATE_ERROR, error);
     }
   });
+
+  //Check the user that has been scanned
+  socket.on(SCANNED_ACOLITE, async (data) => {
+    try {
+      const email = data.data.email;
+      const intoTheCrypt = data.data.intoTheCrypt;
+      console.log(`${email}'s intoTheCrypt: ${intoTheCrypt}`);
+
+      const updatedUser = await User.cryptEntry(email);
+      socket.broadcast.emit(SCANNED_ACOLITE, updatedUser);
+
+    } catch(error) {
+      console.log(error);
+      socket.broadcast.emit(SCANNED_ACOLITE_ERROR, error);
+    }
+  })
+
 
   // socket.on('disconnect', async () => {
   //   console.log('Client disconnected: ', socket.id); 
