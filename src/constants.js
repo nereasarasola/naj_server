@@ -27,6 +27,8 @@ const DISCONNECTION = 'disconnect';
 const ACOLITE_STATE = 'acolite_state';
 const ACOLITE_STATE_ERROR = 'acolite_stateError'
 const ACOLITE_DETAILS = "acolite_details";
+const SCANNED_ACOLITE = "scanned_acolite";
+const SCANNED_ACOLITE_ERROR = "scanned_acoliteError";
 const MISSION_STATUS = 'missionStatus';
 const MISSION_STATUS_ERROR = 'missionStatusError';
 const DOLL_DETAILS = 'doll_details';
@@ -60,4 +62,6 @@ module.exports = {
     MISSION_STATUS_ERROR,
     DOLL_DETAILS,
     DOLL_DETAILS_ERROR,
+    SCANNED_ACOLITE,
+    SCANNED_ACOLITE_ERROR
 }
