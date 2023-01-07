@@ -1,7 +1,7 @@
 const User = require('../userService');
 const Doll = require('../dollService');
 const Piece = require('../pieceService');
-import {io} from '../../index';
+import {socketIO} from '../../index';
 const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR, SCANNED_ACOLITE, SCANNED_ACOLITE_ERROR
 
 } = require('../../constants');
@@ -83,7 +83,7 @@ events = async (socket) => {
     try {      
       console.log({Dolldetails: data.data});
       const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
-      io.emit(DOLL_DETAILS, updatedDoll);
+      socketIO.emit(DOLL_DETAILS, updatedDoll);
     } catch(error) {
       console.log(error);
       socket.emit(DOLL_DETAILS_ERROR, error);
