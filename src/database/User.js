@@ -36,9 +36,9 @@ const cryptEntry = async(email,changes) =>{
   if(!user)
   return ERROR404
   else{
-    changes.intoTheCryp = !user.intoTheCrypt;
+    changes = !user.intoTheCrypt;
       const updatedUser = await User.findOneAndUpdate({email:email},
-        {$set: changes},
+        {$set: {intoTheCrypt: changes}},
         {new:true}
       );
     return updatedUser;
