@@ -1,7 +1,7 @@
 const User = require('../userService');
 const Doll = require('../dollService');
 const Piece = require('../pieceService');
-const server = require('./index');
+const server = require('../../index');
 const io = server.socketIO;
 const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR, SCANNED_ACOLITE, SCANNED_ACOLITE_ERROR
 
