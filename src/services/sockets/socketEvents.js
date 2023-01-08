@@ -17,10 +17,10 @@ events = async (socket) => {
     const body = {socketID: socket.id};
     try {
       const updatedUser = await User.patchUser(data.email, body);
-      io.emit(NEW_CONNECTION, updatedUser);
+      socket.broadcast.emit(NEW_CONNECTION, updatedUser);
     } catch(error) {
       console.log(error);
-      io.emit(NEW_CONNECTION_ERROR, error);
+      socket.broadcast.emit(NEW_CONNECTION_ERROR, error);
     }
   });
 
