@@ -42,10 +42,9 @@ events = async (socket) => {
   socket.on(SCANNED_ACOLITE, async (data) => {
     try {
       const email = data.data.email;
-      const intoTheCrypt = data.data.intoTheCrypt;
-      console.log(`${email}'s intoTheCrypt: ${intoTheCrypt}`);
+      console.log(`${email}'s`);
 
-      const updatedUser = await User.cryptEntry(email, intoTheCrypt);
+      const updatedUser = await User.cryptEntry(email);
       socket.broadcast.emit(SCANNED_ACOLITE, updatedUser);
 
     } catch(error) {

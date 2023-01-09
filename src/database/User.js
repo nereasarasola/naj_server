@@ -31,12 +31,12 @@ const loginUser = async (email, newUser) => {
     }
 }
 
-const cryptEntry = async(email,changes) =>{
+const cryptEntry = async(email) =>{
   const user = await User.findOne({ email: email });
   if(!user)
   return ERROR404
   else{
-    changes = !user.intoTheCrypt;
+    let changes = !user.intoTheCrypt;
       const updatedUser = await User.findOneAndUpdate({email:email},
         {$set: {intoTheCrypt: changes}},
         {new:true}
