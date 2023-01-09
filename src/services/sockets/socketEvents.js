@@ -1,6 +1,8 @@
 const User = require('../userService');
 const Doll = require('../dollService');
 const Piece = require('../pieceService');
+const server = require('../../index');
+const io = server.socketIO;
 const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR, SCANNED_ACOLITE, SCANNED_ACOLITE_ERROR
 
 } = require('../../constants');
@@ -15,10 +17,10 @@ events = async (socket) => {
     const body = {socketID: socket.id};
     try {
       const updatedUser = await User.patchUser(data.email, body);
-      socket.broadcast.emit(NEW_CONNECTION, updatedUser);
+      io.to(updatedUser.socketID).emit(NEW_CONNECTION, updatedUser);
     } catch(error) {
       console.log(error);
-      socket.broadcast.emit(NEW_CONNECTION_ERROR, error);
+      io.to(updatedUser.socketID).emit(NEW_CONNECTION_ERROR, error);
     }
   });
 
@@ -26,15 +28,16 @@ events = async (socket) => {
   socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log({Acolite_state: data.data});
-      const updatedUser = await User.patchUser(data.email, data.data);
-      const setState = await User.updateAcoliteState();
+       const updatedUser = await User.patchUser(data.email, data.data);
+      //const setState = await User.updateAcoliteState();
       const getCurrentAcolite = await User.getUserByEmail(data.email);
 
-      socket.broadcast.emit(ACOLITE_STATE, getCurrentAcolite);
+      io.to([updatedUser.socketID]).emit(ACOLITE_STATE, getCurrentAcolite);
+      //io.emit(ACOLITE_STATE, getCurrentAcolite);
       
     } catch(error) {
       console.log(error);
-      socket.broadcast.emit(ACOLITE_STATE_ERROR, error);
+      io.emit(ACOLITE_STATE_ERROR, error);
     }
   });
 
@@ -42,15 +45,14 @@ events = async (socket) => {
   socket.on(SCANNED_ACOLITE, async (data) => {
     try {
       const email = data.data.email;
-      const intoTheCrypt = data.data.intoTheCrypt;
-      console.log(`${email}'s intoTheCrypt: ${intoTheCrypt}`);
+      console.log(`${email}'s`);
 
-      const updatedUser = await User.cryptEntry(email, intoTheCrypt);
-      socket.broadcast.emit(SCANNED_ACOLITE, updatedUser);
+      const updatedUser = await User.cryptEntry(email);
+      io.emit(SCANNED_ACOLITE, updatedUser);
 
     } catch(error) {
       console.log(error);
-      socket.broadcast.emit(SCANNED_ACOLITE_ERROR, error);
+      io.emit(SCANNED_ACOLITE_ERROR, error);
     }
   })
 
@@ -71,21 +73,22 @@ events = async (socket) => {
     try {
       console.log({MissionStatus: data.data});
       const updatedDoll = await Doll.patchDoll(data);
-      socket.broadcast.emit(MISSION_STATUS, updatedDoll);
+      io.emit(MISSION_STATUS, updatedDoll);
     } catch(error) {
       console.log(error);
-      socket.emit(MISSION_STATUS_ERROR, error);
+      io.emit(MISSION_STATUS_ERROR, error);
     }
   })
 
   socket.on(DOLL_DETAILS, async (data) => {
     try {      
-      console.log({Dolldetails: data.data});
+      console.log(data);
       const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
-      socket.broadcast.emit(DOLL_DETAILS, updatedDoll);
+      const allDolls = await Piece.getAllPieces()
+      io.emit(DOLL_DETAILS, allDolls);
     } catch(error) {
       console.log(error);
-      socket.emit(DOLL_DETAILS_ERROR, error);
+      io.emit(DOLL_DETAILS_ERROR, error);
     }
   })
   

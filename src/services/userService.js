@@ -10,9 +10,9 @@ const createNewUser = async (idToken, newUser) => {
     }
 };
 
-const cryptEntry = async (email,changes) => {
+const cryptEntry = async (email) => {
     try {
-        const cryptUser = User.cryptEntry(email,changes);
+        const cryptUser = User.cryptEntry(email);
         return cryptUser;
     } catch (error) {
         throw error;
