@@ -84,7 +84,8 @@ events = async (socket) => {
     try {      
       console.log(data);
       const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
-      io.emit(DOLL_DETAILS, updatedDoll);
+      const allDolls = await Piece.getAllPieces()
+      io.emit(DOLL_DETAILS, allDolls);
     } catch(error) {
       console.log(error);
       io.emit(DOLL_DETAILS_ERROR, error);
