@@ -1,7 +1,8 @@
 const User = require('../userService');
 const Doll = require('../dollService');
 const Piece = require('../pieceService');
-import {io} from '../../index';
+const server = require('../../index');
+const io = server.socketIO;
 const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR, SCANNED_ACOLITE, SCANNED_ACOLITE_ERROR
 
 } = require('../../constants');
@@ -31,11 +32,11 @@ events = async (socket) => {
       //const setState = await User.updateAcoliteState();
       const getCurrentAcolite = await User.getUserByEmail(data.email);
 
-      socket.broadcast.emit(ACOLITE_STATE, getCurrentAcolite);
+      io.emit(ACOLITE_STATE, getCurrentAcolite);
       
     } catch(error) {
       console.log(error);
-      socket.broadcast.emit(ACOLITE_STATE_ERROR, error);
+      io.emit(ACOLITE_STATE_ERROR, error);
     }
   });
 
@@ -47,11 +48,11 @@ events = async (socket) => {
       console.log(`${email}'s intoTheCrypt: ${intoTheCrypt}`);
 
       const updatedUser = await User.cryptEntry(email, intoTheCrypt);
-      socket.broadcast.emit(SCANNED_ACOLITE, updatedUser);
+      io.emit(SCANNED_ACOLITE, updatedUser);
 
     } catch(error) {
       console.log(error);
-      socket.broadcast.emit(SCANNED_ACOLITE_ERROR, error);
+      io.emit(SCANNED_ACOLITE_ERROR, error);
     }
   })
 
@@ -72,21 +73,22 @@ events = async (socket) => {
     try {
       console.log({MissionStatus: data.data});
       const updatedDoll = await Doll.patchDoll(data);
-      socket.broadcast.emit(MISSION_STATUS, updatedDoll);
+      io.emit(MISSION_STATUS, updatedDoll);
     } catch(error) {
       console.log(error);
-      socket.emit(MISSION_STATUS_ERROR, error);
+      io.emit(MISSION_STATUS_ERROR, error);
     }
   })
 
   socket.on(DOLL_DETAILS, async (data) => {
     try {      
-      console.log({Dolldetails: data.data});
+      console.log(data);
       const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
-      io.emit(DOLL_DETAILS, updatedDoll);
+      const allDolls = await Piece.getAllPieces()
+      io.emit(DOLL_DETAILS, allDolls);
     } catch(error) {
       console.log(error);
-      socket.emit(DOLL_DETAILS_ERROR, error);
+      io.emit(DOLL_DETAILS_ERROR, error);
     }
   })
   
