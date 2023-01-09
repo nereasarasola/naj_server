@@ -27,8 +27,8 @@ events = async (socket) => {
   socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log({Acolite_state: data.data});
-      const updatedUser = await User.patchUser(data.email, data.data);
-      const setState = await User.updateAcoliteState();
+       const updatedUser = await User.patchUser(data.email, data.data);
+      //const setState = await User.updateAcoliteState();
       const getCurrentAcolite = await User.getUserByEmail(data.email);
 
       socket.broadcast.emit(ACOLITE_STATE, getCurrentAcolite);
