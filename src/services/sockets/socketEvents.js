@@ -17,10 +17,10 @@ events = async (socket) => {
     const body = {socketID: socket.id};
     try {
       const updatedUser = await User.patchUser(data.email, body);
-      socket.to([updatedUser.socketID]).emit(NEW_CONNECTION, updatedUser);
+      io.to(updatedUser.socketID).emit(NEW_CONNECTION, updatedUser);
     } catch(error) {
       console.log(error);
-      socket.to([updatedUser.socketID]).emit(NEW_CONNECTION_ERROR, error);
+      io.to(updatedUser.socketID).emit(NEW_CONNECTION_ERROR, error);
     }
   });
 
@@ -32,7 +32,7 @@ events = async (socket) => {
       //const setState = await User.updateAcoliteState();
       const getCurrentAcolite = await User.getUserByEmail(data.email);
 
-      socket.to([updatedUser.socketID]).emit(ACOLITE_STATE, getCurrentAcolite);
+      io.to([updatedUser.socketID]).emit(ACOLITE_STATE, getCurrentAcolite);
       //io.emit(ACOLITE_STATE, getCurrentAcolite);
       
     } catch(error) {
