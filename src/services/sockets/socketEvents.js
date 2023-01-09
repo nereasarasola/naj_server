@@ -28,8 +28,8 @@ events = async (socket) => {
   socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log({Acolite_state: data.data});
-      const updatedUser = await User.patchUser(data.email, data.data);
-      const setState = await User.updateAcoliteState();
+       const updatedUser = await User.patchUser(data.email, data.data);
+      //const setState = await User.updateAcoliteState();
       const getCurrentAcolite = await User.getUserByEmail(data.email);
 
       socket.to([updatedUser.socketID]).emit(ACOLITE_STATE, getCurrentAcolite);
@@ -85,7 +85,8 @@ events = async (socket) => {
     try {      
       console.log(data);
       const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
-      io.emit(DOLL_DETAILS, updatedDoll);
+      const allDolls = await Piece.getAllPieces()
+      io.emit(DOLL_DETAILS, allDolls);
     } catch(error) {
       console.log(error);
       io.emit(DOLL_DETAILS_ERROR, error);

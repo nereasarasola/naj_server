@@ -111,6 +111,7 @@ const updateAcoliteState = async()=>{
   }
 
 }
+
 module.exports = {
     loginUser,
     cryptEntry,
