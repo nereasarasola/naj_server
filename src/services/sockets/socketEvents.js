@@ -14,6 +14,8 @@ socket.on(POISON_ALL, async (data) => {
   try {
     const poisonAll = await User.poisonAllAcoliteMales();
     const allAcolites = await User.getActiveAcolites;
+    console.log('This is poisoned acolites');
+    console.log(allAcolites);
     io.emit(POISON_ALL, allAcolites);
   } catch(error) {
     console.log(error);
