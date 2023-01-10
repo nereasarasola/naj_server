@@ -63,17 +63,9 @@ const updateAcoliteState = async()=>{
     }
 }
 
-const getActiveAdminsSocket  = async()=>{
-    try {
-        const getActiveAdminsSocket = User.getActiveAdminsSocket();
-        return getActiveAdminsSocket;
-    } catch (error) {
-        throw error;
-    }
-}
+
 
 module.exports = {
-    getActiveAdminsSocket,
     createNewUser,
     cryptEntry,
     getActiveAcolites,

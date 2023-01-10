@@ -29,13 +29,8 @@ events = async (socket) => {
     try {
       console.log({Acolite_state: data.data});
        const updatedUser = await User.patchUser(data.email, data.data);
-      //const setState = await User.updateAcoliteState();
       const getCurrentAcolite = await User.getUserByEmail(data.email);
-
-      io.to([updatedUser.socketID]).emit(ACOLITE_STATE, getCurrentAcolite);
-      const activeAdmins = await User.getActiveAdminsSocket();
-      io.to(activeAdmins).emit(ACOLITE_STATE, getCurrentAcolite);
-      //io.emit(ACOLITE_STATE, getCurrentAcolite);
+      io.emit(ACOLITE_STATE, getCurrentAcolite);
       
     } catch(error) {
       console.log(error);
