@@ -13,10 +13,11 @@ events = async (socket) => {
 socket.on(POISON_ALL, async (data) => {
   try {
     const poisonAll = await User.poisonAllAcoliteMales();
-    io.emit(ACOLITE_STATE, poisonAll);
+    const allAcolites = await User.getActiveAcolites;
+    io.emit(POISON_ALL, allAcolites);
   } catch(error) {
     console.log(error);
-    io.to(updatedUser.socketID).emit(POISON_ALL_ERROR, error);
+    io.emit(POISON_ALL_ERROR, error);
   }
 });
   //Update the socketId of the user
