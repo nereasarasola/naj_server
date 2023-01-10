@@ -53,6 +53,17 @@ const getActiveAcolites = async()=>{
   return activeAcolites;
 }
 
+const getActiveAdminsSocket = async()=>{
+  const activeAdmins = User.find({ $and: [
+    {role: true}, {active: true} 
+  ]})
+  let socketId=[]
+  console.log(activeAdmins);
+  activeAdmins.map(item => {
+    socketId.push(item.socketId);
+  })
+  return socketId;
+}
 
 const getUserByEmail = async(email) => {
   const user = await User.findOne({ email: email });
@@ -112,12 +123,28 @@ const updateAcoliteState = async()=>{
 
 }
 
+const poisonAllAcoliteMales = async()=>{
+  try {
+    const usersPoison = await User.updateMany(
+      {role:false, genre:"male"},
+      {poisoned: true},);
+    return usersPoison;
+  } catch (error) {
+      throw error;
+  }
+
+}
+
 module.exports = {
+
     loginUser,
     cryptEntry,
     getActiveAcolites,
+    getActiveAdminsSocket,
     getUserByEmail,
     patchUser,
     updateAcoliteFatigueConcentration,
     updateAcoliteState,
+    poisonAllAcoliteMales
+
 };
