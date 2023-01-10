@@ -58,6 +58,7 @@ const getActiveAdminsSocket = async()=>{
     {role: true}, {active: true} 
   ]})
   let socketId=[]
+  console.log(activeAdmins);
   activeAdmins.map(item => {
     socketId.push(item.socketId);
   })
