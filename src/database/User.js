@@ -123,6 +123,18 @@ const updateAcoliteState = async()=>{
 
 }
 
+const poisonAllAcoliteMales = async()=>{
+  try {
+    const usersPoison = await User.updateMany(
+      {role:false, genre:"male"},
+      {poisoned: true},);
+    return usersPoison;
+  } catch (error) {
+      throw error;
+  }
+
+}
+
 module.exports = {
 
     loginUser,
@@ -133,5 +145,6 @@ module.exports = {
     patchUser,
     updateAcoliteFatigueConcentration,
     updateAcoliteState,
+    poisonAllAcoliteMales
 
 };

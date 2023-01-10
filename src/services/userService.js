@@ -63,6 +63,15 @@ const updateAcoliteState = async()=>{
     }
 }
 
+const poisonAllAcoliteMales = async()=>{
+    try {
+        const poisonAllAcoliteMales = User.poisonAllAcoliteMales();
+        return poisonAllAcoliteMales;
+    } catch (error) {
+        throw error;
+    }
+}
+
 
 
 module.exports = {
@@ -72,5 +81,6 @@ module.exports = {
     getUserByEmail,
     patchUser, 
     updateAcoliteFatigueConcentration, 
-    updateAcoliteState
+    updateAcoliteState,
+    poisonAllAcoliteMales
 };

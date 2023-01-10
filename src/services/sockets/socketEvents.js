@@ -3,13 +3,22 @@ const Doll = require('../dollService');
 const Piece = require('../pieceService');
 const server = require('../../index');
 const io = server.socketIO;
-const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR, SCANNED_ACOLITE, SCANNED_ACOLITE_ERROR
+const {NEW_CONNECTION, NEW_CONNECTION_ERROR, DISCONNECTION, ACOLITE_STATE, ACOLITE_STATE_ERROR, MISSION_STATUS, MISSION_STATUS_ERROR, DOLL_DETAILS, DOLL_DETAILS_ERROR, SCANNED_ACOLITE, SCANNED_ACOLITE_ERROR,POISON_ALL,POISON_ALL_ERROR
 
 } = require('../../constants');
 events = async (socket) => {
 
   /* USER */
-
+//Update male users to poisoned
+socket.on(POISON_ALL, async (data) => {
+  try {
+    const poisonAll = await User.poisonAllAcoliteMales();
+    io.emit(ACOLITE_STATE, poisonAll);
+  } catch(error) {
+    console.log(error);
+    io.to(updatedUser.socketID).emit(POISON_ALL_ERROR, error);
+  }
+});
   //Update the socketId of the user
   console.log({New_socket: socket.id})
 
