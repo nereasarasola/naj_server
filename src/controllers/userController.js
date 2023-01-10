@@ -25,7 +25,9 @@ const createNewUser = async (req, res) => {
        socketID: "not_connected",
        fatigue: 100,
        concentration: 100,
-       state: AWAKE
+       state: AWAKE,
+       poisoned: false,
+       genre: "male"
      };
 
     
