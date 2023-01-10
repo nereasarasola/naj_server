@@ -33,7 +33,7 @@ events = async (socket) => {
       const getCurrentAcolite = await User.getUserByEmail(data.email);
 
       io.to([updatedUser.socketID]).emit(ACOLITE_STATE, getCurrentAcolite);
-      const activeAdmins = await User.activeAdmins();
+      const activeAdmins = await User.getActiveAdminsSocket();
       io.to(activeAdmins).emit(ACOLITE_STATE, getCurrentAcolite);
       //io.emit(ACOLITE_STATE, getCurrentAcolite);
       
