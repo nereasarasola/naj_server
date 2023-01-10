@@ -53,6 +53,16 @@ const getActiveAcolites = async()=>{
   return activeAcolites;
 }
 
+const getActiveAdminsSocket = async()=>{
+  const activeAdmins = User.find({ $and: [
+    {role: true}, {active: true} 
+  ]})
+  let socketId=[]
+  activeAdmins.map(item => {
+    socketId.push(item.socketId);
+  })
+  return socketId;
+}
 
 const getUserByEmail = async(email) => {
   const user = await User.findOne({ email: email });
@@ -113,11 +123,14 @@ const updateAcoliteState = async()=>{
 }
 
 module.exports = {
+
     loginUser,
     cryptEntry,
     getActiveAcolites,
+    getActiveAdminsSocket,
     getUserByEmail,
     patchUser,
     updateAcoliteFatigueConcentration,
     updateAcoliteState,
+
 };
