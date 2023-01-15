@@ -54,7 +54,7 @@ const patchDoll = async (changes) => {
   }
 };
 const updateToNotFoundDolls = async () => {
-  const notFountAllDolls = await User.updateMany(
+  const notFountAllDolls = await Doll.updateMany(
     { isFound: true },
     { isFound: false }
   );
