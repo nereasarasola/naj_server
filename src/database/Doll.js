@@ -55,8 +55,7 @@ const patchDoll = async (changes) => {
 };
 const updateToNotFoundDolls = async () => {
   const notFountAllDolls = await Doll.updateMany(
-    { isFound: true },
-    { isFound: false }
+    {$set:{isFound: false}}
   );
   return notFountAllDolls;
 };
