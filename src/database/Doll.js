@@ -53,17 +53,11 @@ const patchDoll = async (changes) => {
     return patchedDoll;
   }
 };
-const updateToNotFoundDolls = async () => {
-  const notFountAllDolls = await Doll.updateMany(
-    {$set:{isFound: false}}
-  );
-  return notFountAllDolls;
-};
+
 
 module.exports = {
   deleteDolls,
   createDoll,
   getDolls,
   patchDoll,
-  updateToNotFoundDolls
 };

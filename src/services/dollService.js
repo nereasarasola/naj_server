@@ -39,13 +39,6 @@ const deleteDolls = async() =>{
         throw error;
     }
 }
-const updateToNotFoundDolls = async() =>{
-    try {
-        const updateToNotFoundDolls = Doll.updateToNotFoundDolls();
-        return updateToNotFoundDolls;
-    } catch (error) {
-        throw error;
-    }
-}
 
-module.exports = {createNewDoll,getDolls,patchDoll,deleteDolls,updateToNotFoundDolls}
+
+module.exports = {createNewDoll,getDolls,patchDoll,deleteDolls}

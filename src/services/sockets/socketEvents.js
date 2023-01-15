@@ -22,7 +22,7 @@ const {
 events = async (socket) => {
   socket.on(UPDATE_TO_NOT_FOUND_DOLLS, async (data) => {
     try {
-      const dolls = await Piece.patchAllPiecesByName;
+      const dolls = await Piece.patchAllPiecesByName();
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);
     } catch (error) {
