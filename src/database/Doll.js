@@ -53,7 +53,7 @@ const patchDoll = async (changes) => {
     return patchedDoll;
   }
 };
-updateToNotFoundDolls = async () => {
+const updateToNotFoundDolls = async () => {
   const notFountAllDolls = await User.updateMany(
     { isFound: true },
     { isFound: false }
@@ -66,4 +66,5 @@ module.exports = {
   createDoll,
   getDolls,
   patchDoll,
+  updateToNotFoundDolls
 };
