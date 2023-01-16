@@ -74,7 +74,8 @@ events = async (socket) => {
   //Check the user that has been scanned
   socket.on(SCANNED_ACOLITE, async (data) => {
     try {
-      const email = data.data.email;
+      console.log({Acolite_email: data.email})
+      const email = data.email;
       console.log(`${email}'s`);
 
       const updatedUser = await User.cryptEntry(email);
