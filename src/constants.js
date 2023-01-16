@@ -19,6 +19,7 @@ const INCORRENCT_EMAIL = "Incorrect email";
 const INCORRENCT_TOKEN = 'Incorrect token';
 const INCORRECT_DATA = 'Incorrect data';
 const ERROR404 = "Error 404";
+const POISON_ALL_ERROR = 'poison_all_error';
 
 //Sockets
 const NEW_CONNECTION = 'new_connection';
@@ -33,6 +34,8 @@ const MISSION_STATUS = 'missionStatus';
 const MISSION_STATUS_ERROR = 'missionStatusError';
 const DOLL_DETAILS = 'doll_details';
 const DOLL_DETAILS_ERROR = 'doll_detailsError';
+const POISON_ALL = 'poison_all';
+const UPDATE_TO_NOT_FOUND_DOLLS = 'update_to_not_found_dolls';
 
 
 
@@ -63,5 +66,8 @@ module.exports = {
     DOLL_DETAILS,
     DOLL_DETAILS_ERROR,
     SCANNED_ACOLITE,
-    SCANNED_ACOLITE_ERROR
+    SCANNED_ACOLITE_ERROR,
+    POISON_ALL,
+    POISON_ALL_ERROR,
+    UPDATE_TO_NOT_FOUND_DOLLS
 }

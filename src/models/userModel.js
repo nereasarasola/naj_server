@@ -15,6 +15,8 @@ const userSchema = new Schema({
   fatigue: { type: Number, min: 10, max: 100 },
   concentration: { type: Number, min: 10, max: 100 },
   state: String,
+  poisoned: Boolean,
+  genre: String
 });
 
 module.exports = mongoose.model('User', userSchema);

@@ -53,6 +53,17 @@ const getActiveAcolites = async()=>{
   return activeAcolites;
 }
 
+const getActiveAdminsSocket = async()=>{
+  const activeAdmins = User.find({ $and: [
+    {role: true}, {active: true} 
+  ]})
+  let socketId=[]
+  console.log(activeAdmins);
+  activeAdmins.map(item => {
+    socketId.push(item.socketId);
+  })
+  return socketId;
+}
 
 const getUserByEmail = async(email) => {
   const user = await User.findOne({ email: email });
@@ -80,12 +91,16 @@ const patchUser= async(email,changes)=>{
 const updateAcoliteFatigueConcentration = async()=>{
   try {
     const usersSleep = await User.updateMany(
-      {role:false , state: SLEEP, fatigue: {$lt: 100}},
+      {role:false , state: SLEEP, poisoned:false, fatigue: {$lt: 100}},
       { $inc: { fatigue: 10, concentration: 10}},);
 
     const usersAwake = await User.updateMany( 
-      {role: false, state: AWAKE, fatigue: {$gt: 20}},
+      {role: false, state: AWAKE, poisoned:false,fatigue: {$gt: 20}},
       { $inc: { fatigue: -10, concentration: -10}});
+
+      const usersAwakePoisoned = await User.updateMany( 
+        {role: false, state: AWAKE,poisoned:true, fatigue: {$gt: 20}},
+        { $inc: { fatigue: -20, concentration: -20}});
 
     const userExhausted = await User.updateMany(
       {role: false, state: EXHAUSTED, $eq: {fatigue: 20}},
@@ -112,12 +127,28 @@ const updateAcoliteState = async()=>{
 
 }
 
+const poisonAllAcoliteMales = async()=>{
+  try {
+    const usersPoison = await User.updateMany(
+      {role:false, genre:"male"},
+      {poisoned: true},);
+    return usersPoison;
+  } catch (error) {
+      throw error;
+  }
+
+}
+
 module.exports = {
+
     loginUser,
     cryptEntry,
     getActiveAcolites,
+    getActiveAdminsSocket,
     getUserByEmail,
     patchUser,
     updateAcoliteFatigueConcentration,
     updateAcoliteState,
+    poisonAllAcoliteMales
+
 };
