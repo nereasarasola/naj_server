@@ -24,6 +24,8 @@ const POISON_ALL_ERROR = 'poison_all_error';
 //Sockets
 const NEW_CONNECTION = 'new_connection';
 const NEW_CONNECTION_ERROR = 'new_connectionError';
+const NEW_USER = 'new_user';
+const NEW_USER_ERROR = 'new_userError';
 const DISCONNECTION = 'disconnect';
 const ACOLITE_STATE = 'acolite_state';
 const ACOLITE_STATE_ERROR = 'acolite_stateError'
@@ -57,6 +59,8 @@ module.exports = {
     ERROR404,
     NEW_CONNECTION,
     NEW_CONNECTION_ERROR,
+    NEW_USER,
+    NEW_USER_ERROR,
     DISCONNECTION,
     ACOLITE_STATE,
     ACOLITE_STATE_ERROR,
