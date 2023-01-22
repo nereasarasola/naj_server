@@ -6,7 +6,8 @@ const io = server.socketIO;
 const {
   NEW_CONNECTION,
   NEW_CONNECTION_ERROR,
-  DISCONNECTION,
+  NEW_USER,
+  NEW_USER_ERROR,
   ACOLITE_STATE,
   ACOLITE_STATE_ERROR,
   MISSION_STATUS,
@@ -19,7 +20,10 @@ const {
   POISON_ALL_ERROR,
   UPDATE_TO_NOT_FOUND_DOLLS
 } = require("../../constants");
+
+
 events = async (socket) => {
+
   socket.on(UPDATE_TO_NOT_FOUND_DOLLS, async (data) => {
     try {
       const dolls = await Piece.patchAllPiecesByName();
@@ -30,6 +34,7 @@ events = async (socket) => {
       io.emit(DOLL_DETAILS_ERROR, error);
     }
   });
+
   /* USER */
   //Update male users to poisoned
   socket.on(POISON_ALL, async (data) => {
@@ -44,6 +49,28 @@ events = async (socket) => {
       io.emit(POISON_ALL_ERROR, error);
     }
   });
+
+  socket.on(NEW_USER, async (data) => {
+    let email = data.email;
+    let newUser = data.data;
+
+    try {
+      const user = await User.createNewUser(email, newUser);
+      io.emit(NEW_USER, user);
+
+    } catch(error) {
+      console.log(error);
+      io.emit(NEW_USER_ERROR, error)
+
+    }
+
+  })
+
+
+
+
+
+
   //Update the socketId of the user
   console.log({ New_socket: socket.id });
 
