@@ -54,7 +54,7 @@ const createNewUser = async (req, res) => {
        const refreshToken = generateRefreshToken(email);
        const tokens = {accesToken, refreshToken}
 
-       res.send({  data: createdUser, tokens });
+       res.send({  data: createdUser, tokens: tokens });
        
      } catch (error) {
        res.status(error?.status || 500).send({
