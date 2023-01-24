@@ -38,6 +38,8 @@ const DOLL_DETAILS = 'doll_details';
 const DOLL_DETAILS_ERROR = 'doll_detailsError';
 const POISON_ALL = 'poison_all';
 const UPDATE_TO_NOT_FOUND_DOLLS = 'update_to_not_found_dolls';
+const UPDATE_TO_NOT_FOUND_DOLLS_ERROR = 'error updating dolls';
+
 
 
 

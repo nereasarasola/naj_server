@@ -18,7 +18,8 @@ const {
   SCANNED_ACOLITE_ERROR,
   POISON_ALL,
   POISON_ALL_ERROR,
-  UPDATE_TO_NOT_FOUND_DOLLS
+  UPDATE_TO_NOT_FOUND_DOLLS,
+  UPDATE_TO_NOT_FOUND_DOLLS_ERROR
 } = require("../../constants");
 
 
@@ -31,7 +32,7 @@ events = async (socket) => {
       io.emit(DOLL_DETAILS, allDolls);
     } catch (error) {
       console.log(error);
-      io.emit(DOLL_DETAILS_ERROR, error);
+      io.emit(error, UPDATE_TO_NOT_FOUND_DOLLS_ERROR);
     }
   });
 
@@ -46,7 +47,7 @@ events = async (socket) => {
       io.emit(POISON_ALL, allAcolites);
     } catch (error) {
       console.log(error);
-      io.emit(POISON_ALL_ERROR, error);
+      io.emit(error, POISON_ALL_ERROR);
     }
   });
 
@@ -56,11 +57,11 @@ events = async (socket) => {
 
     try {
       const user = await User.createNewUser(email, newUser);
-      io.emit(NEW_USER, user);
+      io.emit(error, user);
 
     } catch(error) {
       console.log(error);
-      io.emit(NEW_USER_ERROR, error)
+      io.emit(error, NEW_USER_ERROR)
 
     }
 
@@ -81,7 +82,7 @@ events = async (socket) => {
       io.to(updatedUser.socketID).emit(NEW_CONNECTION, updatedUser);
     } catch (error) {
       console.log(error);
-      io.to(updatedUser.socketID).emit(NEW_CONNECTION_ERROR, error);
+      io.to(updatedUser.socketID).emit(error, NEW_CONNECTION_ERROR);
     }
   });
 
@@ -94,7 +95,7 @@ events = async (socket) => {
       io.emit(ACOLITE_STATE, getCurrentAcolite);
     } catch (error) {
       console.log(error);
-      io.emit(ACOLITE_STATE_ERROR, error);
+      io.emit(error, ACOLITE_STATE_ERROR);
     }
   });
 
@@ -109,7 +110,7 @@ events = async (socket) => {
       io.emit(SCANNED_ACOLITE, updatedUser);
     } catch (error) {
       console.log(error);
-      io.emit(SCANNED_ACOLITE_ERROR, error);
+      io.emit(error, SCANNED_ACOLITE_ERROR);
     }
   });
 
@@ -131,7 +132,7 @@ events = async (socket) => {
       io.emit(MISSION_STATUS, updatedDoll);
     } catch (error) {
       console.log(error);
-      io.emit(MISSION_STATUS_ERROR, error);
+      io.emit(error, MISSION_STATUS_ERROR);
     }
   });
 
@@ -143,7 +144,7 @@ events = async (socket) => {
       io.emit(DOLL_DETAILS, allDolls);
     } catch (error) {
       console.log(error);
-      io.emit(DOLL_DETAILS_ERROR, error);
+      io.emit(error, DOLL_DETAILS_ERROR);
     }
   });
 };
