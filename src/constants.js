@@ -43,6 +43,7 @@ const DOLL_DETAILS_ERROR = 'doll_detailsError';
 const POISON_ALL = 'poison_all';
 const UPDATE_TO_NOT_FOUND_DOLLS = 'update_to_not_found_dolls';
 const UPDATE_TO_NOT_FOUND_DOLLS_ERROR = 'error updating dolls';
+const REFRESH_VALIDATION = 'refresh_validation';
 
 
 
@@ -83,5 +84,6 @@ module.exports = {
     SCANNED_ACOLITE_ERROR,
     POISON_ALL,
     POISON_ALL_ERROR,
-    UPDATE_TO_NOT_FOUND_DOLLS
+    UPDATE_TO_NOT_FOUND_DOLLS,
+    REFRESH_VALIDATION
 }
