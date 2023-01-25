@@ -33,6 +33,9 @@ async function authenticateRefreshToken (req, res, next) {
         else {
            let accesToken = generateAccessToken(email);
            let refreshToken = generateRefreshToken(email);
+
+           console.log({acces_token: accesToken})
+           console.log({refresh_token: refreshToken})
            
            res.send({ tokens: {accesToken, refreshToken} });
 

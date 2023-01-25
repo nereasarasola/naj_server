@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/", accesToken.authenticateToken,userController.getActiveAcolites);
 router.get("/:email",accesToken.authenticateToken, userController.getUserByEmail);
-router.post("/refresh", refreshToken.authenticateRefreshToken, );
+router.get("/refresh", refreshToken.authenticateRefreshToken);
 router.post("/", tokenAuth.verifyIdToken, userController.createNewUser);
 router.patch("/cryptEntry/:email",userController.cryptEntry);
 router.patch("/update/:email",userController.patchUser);
