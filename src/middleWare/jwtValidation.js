@@ -4,7 +4,7 @@ const verificate = require('../utils');
 require('dotenv').config();
 
 
-const authenticateToken = (req, res, next) => {
+async function authenticateToken (req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
     
@@ -13,27 +13,24 @@ const authenticateToken = (req, res, next) => {
         return res.sendStatus(401)
     }
 
-    res = verificate.verificateJWT(token)
-    console.log(res)
- 
-    // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
-    //     if(error) {
-    //         // console.log("FORBIDDEN")
-    //         // console.log(error)
-    //         // return res.sendStatus(403)
+    jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
+        if(error) {
+            // console.log("FORBIDDEN")
+            // console.log(error)
+            // return res.sendStatus(403)
 
-    //         return res.status(403).send({
-    //             status: STATUS,
-    //             data: {
-    //               error:
-    //                 'Expired token',
-    //             }
-    //         })
-    //     }
+            return res.status(403).send({
+                status: STATUS,
+                data: {
+                  error:
+                    'Expired token',
+                }
+            })
+        }
  
-    //     // req.email = email
-    //     // next()
-    // })
+        req.email = email
+        next()
+    })
  }
  
 exports.authenticateToken = authenticateToken
