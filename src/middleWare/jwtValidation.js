@@ -4,7 +4,7 @@ const verificate = require('../utils');
 require('dotenv').config();
 
 
-const authenticateToken = (req, res, next) => {
+async function authenticateToken (req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
     if(!token) {
