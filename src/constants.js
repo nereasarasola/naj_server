@@ -12,7 +12,11 @@ const FAINTED = 'fainted';
 
 //Error message
 const STATUS = 'FAILED';
+const FORBIDDEN = 'FORBIDDEN';
+const UNAUTHORIZED = 'UNAUTHORIZED';
 const MESSAGE = "Failed making the req: ";
+const FORBIDDEN_MESSAGE = 'Expired token';
+const UNAUTHORIZED_MESSAGE = 'Unauthorized token';
 const MISSING_EMAIL= "One of the following keys is missing or is empty in request body:'email'";
 const MISSING_NAME_EMAIL = "One of the following keys is missing or is empty in request body: 'name', 'email'";
 const INCORRENCT_EMAIL = "Incorrect email";
@@ -48,7 +52,11 @@ module.exports = {
     PROJECT_ID,
     STARTED,
     STATUS,
+    UNAUTHORIZED,
+    FORBIDDEN,
     MESSAGE,
+    FORBIDDEN_MESSAGE,
+    UNAUTHORIZED_MESSAGE,
     MISSING_NAME_EMAIL,
     MISSING_EMAIL,
     INCORRENCT_EMAIL,

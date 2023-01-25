@@ -52,11 +52,6 @@ const createNewUser = async (req, res) => {
        //Generate the two JWT's
        const accesToken = generateAccessToken(email);
        const refreshToken = generateRefreshToken(email);
-       console.log('accesToken')
-       console.log(accesToken);
-       console.log('refreshToken')
-       console.log(refreshToken);
-
        const tokens = {accesToken, refreshToken}
 
        res.send({  data: createdUser, tokens: tokens });
