@@ -134,10 +134,11 @@ const patchUser = async (req, res) => {
     });
   }
 }
+
 module.exports = {
     createNewUser,
     cryptEntry,
     getActiveAcolites,
     getUserByEmail,
-    patchUser
+    patchUser, 
 }

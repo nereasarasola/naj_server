@@ -153,21 +153,22 @@ events = async (socket) => {
 
   //JWT validation//
   socket.on(REFRESH_VALIDATION, async (data) => {
-    socket.use()
+    console.log(data);
+    socket.use();
   })
 
-  socket.on(REFRESH_VALIDATION, (data) => {
-    console.log(data)
-    // socket.use((next) => {
+  // socket.on(REFRESH_VALIDATION, (data) => {
+  //   console.log(data)
+  //   // socket.use((next) => {
       
 
-    //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
-    //     if(error) return next(new Error('Authentication error'));
+  //   //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
+  //   //     if(error) return next(new Error('Authentication error'));
 
-    //     req.email = email
-    //     next()
-    // })
-  });
+  //   //     req.email = email
+  //   //     next()
+  //   // })
+  // });
 
 
 
