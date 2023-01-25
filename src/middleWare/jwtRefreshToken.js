@@ -6,6 +6,9 @@ require('dotenv').config();
 async function authenticateRefreshToken (req, res, next) {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
+    req.email = email
+
+    console.log({email: email})
 
     if(!token) {
         return res.status(401).send({
@@ -18,7 +21,6 @@ async function authenticateRefreshToken (req, res, next) {
     }
  
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (error, email) => {
-        req.email = email
 
         if(error) {
             return res.status(403).send({
