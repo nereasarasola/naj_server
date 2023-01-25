@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
+const {STATUS} = require('../constants'); 
 require('dotenv').config();
+
 
 const authenticateToken = (req, res, next) => {
     const authHeader = req.headers['authorization']
@@ -11,9 +13,15 @@ const authenticateToken = (req, res, next) => {
  
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
         if(error) {
-            console.log("FORBIDDEN")
-            console.log(error)
-            return res.sendStatus(403)
+            // console.log("FORBIDDEN")
+            // console.log(error)
+            // return res.sendStatus(403)
+
+            return res.status(error?.status || 403).send({
+                status: STATUS,
+                message: 'Expired token',
+                data: { error: error?.message || error },
+              });
         }
  
         req.email = email
