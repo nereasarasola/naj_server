@@ -15,7 +15,14 @@ async function authenticateToken (req, res, next) {
     jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
         if(error) {
             console.log("FORBIDDEN")
-            return res.sendStatus(403)
+            console.log(error)
+            return res.status(403).send({
+                status: 'FORBIDDEN',
+                data: {
+                  error:
+                    'Expired token',
+                }
+            })
         }
  
         req.email = email
