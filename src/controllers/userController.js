@@ -54,6 +54,9 @@ const createNewUser = async (req, res) => {
        const refreshToken = generateRefreshToken(email);
        const tokens = {accesToken, refreshToken}
 
+       console.log({acces_token: accesToken})
+       console.log({refresh_token: refreshToken})
+
        res.send({  data: createdUser, tokens: tokens });
        
      } catch (error) {
