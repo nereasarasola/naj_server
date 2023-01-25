@@ -13,7 +13,7 @@ const authenticateToken = (req, res, next) => {
         return res.sendStatus(401)
     }
 
-    const res = verificateJWT(token)
+    res = verificateJWT(token)
     console.log(res)
  
     // jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
