@@ -8,7 +8,6 @@ const socketEvents = require('./socketEvents').socketEvents;
 io.on("connection", (socket) => {
 
     console.log('connection')
-    console.log({Socket: socket});
 
     socket.use(([event, ...args], next) => {
 
