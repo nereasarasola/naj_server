@@ -1,12 +1,14 @@
 const server = require('../../index');
 const io = server.socketIO;
 const jwt = require('jsonwebtoken');
+const {generateAccessToken, generateRefreshToken} = require("../jwt");
+const {CONNECTION} = require('../../constants');
 require('dotenv').config();
 
 const socketEvents = require('./socketEvents').socketEvents;
 
 //Middleware//
-io.on("connection", (socket) => {
+io.on(CONNECTION, (socket) => {
 
     console.log('connection')
 
@@ -21,7 +23,18 @@ io.on("connection", (socket) => {
             if(error) {
                 socket.disconnect();
             }
+
+            else {
+                let accesToken = generateAccessToken(email);
+                let refreshToken = generateRefreshToken(email);
+                let tokens = {accesToken, refreshToken}
+
+                io.emit({tokens}, CONNECTION);
+                io.on(CONNECTION, socketEvents);
+
+            }
         });
+
         next();
            
     });

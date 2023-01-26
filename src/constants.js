@@ -26,6 +26,7 @@ const ERROR404 = "Error 404";
 const POISON_ALL_ERROR = 'poison_all_error';
 
 //Sockets
+const CONNECTION = 'connection';
 const NEW_CONNECTION = 'new_connection';
 const NEW_CONNECTION_ERROR = 'new_connectionError';
 const NEW_USER = 'new_user';
@@ -44,14 +45,13 @@ const POISON_ALL = 'poison_all';
 const UPDATE_TO_NOT_FOUND_DOLLS = 'update_to_not_found_dolls';
 const UPDATE_TO_NOT_FOUND_DOLLS_ERROR = 'error updating dolls';
 const REFRESH_VALIDATION = 'refresh_validation';
-const DISCONNECT = "disconnect";
 
 
 
 
 
 module.exports = {
-    DISCONNECT,
+    CONNECTION,
     PROJECT_ID,
     STARTED,
     STATUS,
