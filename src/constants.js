@@ -44,12 +44,14 @@ const POISON_ALL = 'poison_all';
 const UPDATE_TO_NOT_FOUND_DOLLS = 'update_to_not_found_dolls';
 const UPDATE_TO_NOT_FOUND_DOLLS_ERROR = 'error updating dolls';
 const REFRESH_VALIDATION = 'refresh_validation';
+const DISCONNECT = "disconnect";
 
 
 
 
 
 module.exports = {
+    DISCONNECT,
     PROJECT_ID,
     STARTED,
     STATUS,
