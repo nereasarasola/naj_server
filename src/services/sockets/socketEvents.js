@@ -3,6 +3,7 @@ const Doll = require("../dollService");
 const Piece = require("../pieceService");
 const server = require("../../index");
 const io = server.socketIO;
+const jwt = require('jsonwebtoken');
 const {
   NEW_CONNECTION,
   NEW_CONNECTION_ERROR,
@@ -18,58 +19,40 @@ const {
   SCANNED_ACOLITE_ERROR,
   POISON_ALL,
   POISON_ALL_ERROR,
-  UPDATE_TO_NOT_FOUND_DOLLS
+  UPDATE_TO_NOT_FOUND_DOLLS,
+  UPDATE_TO_NOT_FOUND_DOLLS_ERROR,
+  REFRESH_VALIDATION,
+  DISCONNECT
 } = require("../../constants");
 
 
 events = async (socket) => {
 
-  socket.on(UPDATE_TO_NOT_FOUND_DOLLS, async (data) => {
+  socket.on(UPDATE_TO_NOT_FOUND_DOLLS, async () => {
     try {
-      const dolls = await Piece.patchAllPiecesByName();
+      await Piece.patchAllPiecesByName();
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);
     } catch (error) {
       console.log(error);
-      io.emit(DOLL_DETAILS_ERROR, error);
+      io.emit(error, UPDATE_TO_NOT_FOUND_DOLLS_ERROR);
     }
   });
 
   /* USER */
   //Update male users to poisoned
-  socket.on(POISON_ALL, async (data) => {
+  socket.on(POISON_ALL, async () => {
     try {
-      const poisonAll = await User.poisonAllAcoliteMales();
+      await User.poisonAllAcoliteMales();
       const allAcolites = await User.getActiveAcolites();
       console.log("This is poisoned acolites");
       console.log(allAcolites);
       io.emit(POISON_ALL, allAcolites);
     } catch (error) {
       console.log(error);
-      io.emit(POISON_ALL_ERROR, error);
+      io.emit(error, POISON_ALL_ERROR);
     }
   });
-
-  socket.on(NEW_USER, async (data) => {
-    let email = data.email;
-    let newUser = data.data;
-
-    try {
-      const user = await User.createNewUser(email, newUser);
-      io.emit(NEW_USER, user);
-
-    } catch(error) {
-      console.log(error);
-      io.emit(NEW_USER_ERROR, error)
-
-    }
-
-  })
-
-
-
-
-
 
   //Update the socketId of the user
   console.log({ New_socket: socket.id });
@@ -81,7 +64,7 @@ events = async (socket) => {
       io.to(updatedUser.socketID).emit(NEW_CONNECTION, updatedUser);
     } catch (error) {
       console.log(error);
-      io.to(updatedUser.socketID).emit(NEW_CONNECTION_ERROR, error);
+      io.to(updatedUser.socketID).emit(error, NEW_CONNECTION_ERROR);
     }
   });
 
@@ -89,12 +72,12 @@ events = async (socket) => {
   socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log({ Acolite_state: data.data });
-      const updatedUser = await User.patchUser(data.email, data.data);
+      await User.patchUser(data.email, data.data);
       const getCurrentAcolite = await User.getUserByEmail(data.email);
       io.emit(ACOLITE_STATE, getCurrentAcolite);
     } catch (error) {
       console.log(error);
-      io.emit(ACOLITE_STATE_ERROR, error);
+      io.emit(error, ACOLITE_STATE_ERROR);
     }
   });
 
@@ -109,7 +92,7 @@ events = async (socket) => {
       io.emit(SCANNED_ACOLITE, updatedUser);
     } catch (error) {
       console.log(error);
-      io.emit(SCANNED_ACOLITE_ERROR, error);
+      io.emit(error, SCANNED_ACOLITE_ERROR);
     }
   });
 
@@ -131,20 +114,26 @@ events = async (socket) => {
       io.emit(MISSION_STATUS, updatedDoll);
     } catch (error) {
       console.log(error);
-      io.emit(MISSION_STATUS_ERROR, error);
+      io.emit(error, MISSION_STATUS_ERROR);
     }
   });
 
   socket.on(DOLL_DETAILS, async (data) => {
     try {
       console.log(data);
-      const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
+      await Piece.patchPiece(data.pieceName, data.data);
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);
     } catch (error) {
       console.log(error);
-      io.emit(DOLL_DETAILS_ERROR, error);
+      io.emit(error, DOLL_DETAILS_ERROR);
     }
+  });
+
+  socket.on("disconnect", async (data) => {
+    //io.emit(DISCONNECT, reason);
+    console.log('socket disconnected : ' + socket.id);
+    socket.disconnect();
   });
 };
 

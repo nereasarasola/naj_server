@@ -12,7 +12,11 @@ const FAINTED = 'fainted';
 
 //Error message
 const STATUS = 'FAILED';
+const FORBIDDEN = 'FORBIDDEN';
+const UNAUTHORIZED = 'UNAUTHORIZED';
 const MESSAGE = "Failed making the req: ";
+const FORBIDDEN_MESSAGE = 'Expired token';
+const UNAUTHORIZED_MESSAGE = 'Unauthorized token';
 const MISSING_EMAIL= "One of the following keys is missing or is empty in request body:'email'";
 const MISSING_NAME_EMAIL = "One of the following keys is missing or is empty in request body: 'name', 'email'";
 const INCORRENCT_EMAIL = "Incorrect email";
@@ -22,6 +26,7 @@ const ERROR404 = "Error 404";
 const POISON_ALL_ERROR = 'poison_all_error';
 
 //Sockets
+const CONNECTION = 'connection';
 const NEW_CONNECTION = 'new_connection';
 const NEW_CONNECTION_ERROR = 'new_connectionError';
 const NEW_USER = 'new_user';
@@ -38,15 +43,23 @@ const DOLL_DETAILS = 'doll_details';
 const DOLL_DETAILS_ERROR = 'doll_detailsError';
 const POISON_ALL = 'poison_all';
 const UPDATE_TO_NOT_FOUND_DOLLS = 'update_to_not_found_dolls';
+const UPDATE_TO_NOT_FOUND_DOLLS_ERROR = 'error updating dolls';
+const REFRESH_VALIDATION = 'refresh_validation';
+
 
 
 
 
 module.exports = {
+    CONNECTION,
     PROJECT_ID,
     STARTED,
     STATUS,
+    UNAUTHORIZED,
+    FORBIDDEN,
     MESSAGE,
+    FORBIDDEN_MESSAGE,
+    UNAUTHORIZED_MESSAGE,
     MISSING_NAME_EMAIL,
     MISSING_EMAIL,
     INCORRENCT_EMAIL,
@@ -73,5 +86,6 @@ module.exports = {
     SCANNED_ACOLITE_ERROR,
     POISON_ALL,
     POISON_ALL_ERROR,
-    UPDATE_TO_NOT_FOUND_DOLLS
+    UPDATE_TO_NOT_FOUND_DOLLS,
+    REFRESH_VALIDATION
 }

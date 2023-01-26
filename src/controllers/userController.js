@@ -1,6 +1,7 @@
 const userService = require("../services/userService");
 require('dotenv').config();
 const {STATUS, MESSAGE, MISSING_NAME_EMAIL, INCORRENCT_EMAIL, AWAKE, MISSING_EMAIL} = require('../constants')
+const {generateAccessToken, generateRefreshToken} = require("../jwt");
 
 const createNewUser = async (req, res) => {
     const { idToken, name, email,avatar } = req.body;
@@ -47,7 +48,17 @@ const createNewUser = async (req, res) => {
     
      try {
        const createdUser = await userService.createNewUser(email, newUser);
-       res.send({  data: createdUser });
+
+       //Generate the two JWT's
+       const accesToken = generateAccessToken(email);
+       const refreshToken = generateRefreshToken(email);
+       const tokens = {accesToken, refreshToken}
+
+       console.log({acces_token: accesToken})
+       console.log({refresh_token: refreshToken})
+
+       res.send({  data: createdUser, tokens: tokens });
+       
      } catch (error) {
        res.status(error?.status || 500).send({
          status: STATUS,
@@ -126,10 +137,11 @@ const patchUser = async (req, res) => {
     });
   }
 }
+
 module.exports = {
     createNewUser,
     cryptEntry,
     getActiveAcolites,
     getUserByEmail,
-    patchUser
+    patchUser, 
 }

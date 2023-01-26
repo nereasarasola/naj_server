@@ -1,5 +1,5 @@
 const admin = require('firebase-admin')
-const {applicationDefault} =require ('firebase-admin/app');
+const {applicationDefault} = require ('firebase-admin/app');
 const {PROJECT_ID, STATUS, INCORRENCT_TOKEN, INCORRECT_DATA} = require('../constants')
 
 const firebase = admin.initializeApp ({
@@ -40,6 +40,7 @@ async function verifyIdToken (req,res,next) {
       }
   })}
 }
+
 
 
 
