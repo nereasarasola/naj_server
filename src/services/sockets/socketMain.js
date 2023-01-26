@@ -30,7 +30,7 @@ io.on(CONNECTION, (socket) => {
                 let tokens = {accesToken, refreshToken}
 
                 io.emit({tokens}, CONNECTION);
-                io.on(CONNECTION, socketEvents);
+                // io.on(CONNECTION, socketEvents);
 
             }
         });
