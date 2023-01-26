@@ -7,7 +7,7 @@ async function authenticateRefreshToken (req, res, next) {
 
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
-
+    email = req.body.email;
 
     if(!token) {
         return res.status(401).send({
@@ -38,12 +38,9 @@ async function authenticateRefreshToken (req, res, next) {
            console.log({acces_token: accesToken})
            console.log({refresh_token: refreshToken})
            
-           res.send({ tokens: {accesToken, refreshToken} });
+           return res.send({ tokens: {accesToken, refreshToken} });
 
         }
-
-        email = req.body.email;
-        next();
 
     })
 }
