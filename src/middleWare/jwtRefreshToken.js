@@ -4,11 +4,9 @@ const {generateAccessToken, generateRefreshToken} = require("../jwt");
 require('dotenv').config();
 
 async function authenticateRefreshToken (req, res, next) {
+
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
-    req.email = email
-
-    console.log({email: email})
 
     if(!token) {
         return res.status(401).send({
@@ -42,7 +40,9 @@ async function authenticateRefreshToken (req, res, next) {
            res.send({ tokens: {accesToken, refreshToken} });
 
         }
- 
+
+        req.email = email
+        console.log({email: email});
         next()
     })
 }
