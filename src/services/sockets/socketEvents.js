@@ -21,7 +21,8 @@ const {
   POISON_ALL_ERROR,
   UPDATE_TO_NOT_FOUND_DOLLS,
   UPDATE_TO_NOT_FOUND_DOLLS_ERROR,
-  REFRESH_VALIDATION
+  REFRESH_VALIDATION,
+  DISCONNECT
 } = require("../../constants");
 
 
@@ -152,9 +153,19 @@ events = async (socket) => {
     socket.use();
   })
 
-  socket.on(REFRESH_VALIDATION, (data) => {
-    console.log(data)
-    // socket.use((next) => {
+
+  socket.on("disconnect", async (reason) => {
+    //io.emit(DISCONNECT, reason);
+    console.log('socket disconnected : ' + socket.id)
+  });
+
+
+
+
+
+  // socket.on(REFRESH_VALIDATION, (data) => {
+  //   console.log(data)
+  //   // socket.use((next) => {
       
 
     //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
@@ -163,7 +174,7 @@ events = async (socket) => {
     //     req.email = email
     //     next()
     // })
-  });
+  
 
 
 
