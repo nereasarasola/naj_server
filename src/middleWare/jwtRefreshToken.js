@@ -3,16 +3,11 @@ const {UNAUTHORIZED, FORBIDDEN, FORBIDDEN_MESSAGE, UNAUTHORIZED_MESSAGE, STATUS}
 const {generateAccessToken, generateRefreshToken} = require("../jwt");
 require('dotenv').config();
 
-async function authenticateRefreshToken (req, res) {
+async function authenticateRefreshToken (req, res, next) {
 
-    console.log('he entrado en el middleware de refresco');
-
-    const {email} = req.body;
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
-    console.log({email: email})
-    
     if(!token) {
         return res.status(401).send({
             status: UNAUTHORIZED,
@@ -42,10 +37,11 @@ async function authenticateRefreshToken (req, res) {
            console.log({acces_token: accesToken})
            console.log({refresh_token: refreshToken})
            
-           return res.send({ tokens: {accesToken, refreshToken} });
+           res.send({ tokens: {accesToken, refreshToken} });
+           next();
 
         }
-        // next()
+
     })
 }
  
