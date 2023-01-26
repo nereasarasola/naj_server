@@ -7,34 +7,32 @@ const socketEvents = require('./socketEvents').socketEvents;
 //Middleware//
 io.on("connection", (socket) => {
 
-   console.log({Socket: socket});
+    console.log('connection')
+    console.log({Socket: socket});
 
-    socket.use((event, next) => {
+    socket.use(([event, ...args], next) => {
 
+        console.log({event: event});
         //Si el refresh token no es válido, desconectaremos la conexión
-        jwt.verify(event, process.env.REFRESH_TOKEN_SECRET, (error, email) => {
+        jwt.verify(event, process.env.ACCES_TOKEN_SECRET, (error, email) => {
 
             if(error) {
                 socket.disconnect();
             }
-        })
-
-
-
-
-        if (isUnauthorized(event)) {
-        return next(new Error("unauthorized event"));
-        }
-        // do not forget to call next
+        });
         next();
+           
     });
 
-    socket.on("error", (err) => {
-        if (err && err.message === "unauthorized event") {
-        socket.disconnect();
-        }
-    });
+    
+
+
+    
+
+   
 });
+
+
 
 
 //JWT validation//
