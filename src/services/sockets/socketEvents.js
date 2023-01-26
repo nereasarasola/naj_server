@@ -3,6 +3,7 @@ const Doll = require("../dollService");
 const Piece = require("../pieceService");
 const server = require("../../index");
 const io = server.socketIO;
+const jwt = require('jsonwebtoken');
 const {
   NEW_CONNECTION,
   NEW_CONNECTION_ERROR,
@@ -19,15 +20,16 @@ const {
   POISON_ALL,
   POISON_ALL_ERROR,
   UPDATE_TO_NOT_FOUND_DOLLS,
-  UPDATE_TO_NOT_FOUND_DOLLS_ERROR
+  UPDATE_TO_NOT_FOUND_DOLLS_ERROR,
+  REFRESH_VALIDATION
 } = require("../../constants");
 
 
 events = async (socket) => {
 
-  socket.on(UPDATE_TO_NOT_FOUND_DOLLS, async (data) => {
+  socket.on(UPDATE_TO_NOT_FOUND_DOLLS, async () => {
     try {
-      const dolls = await Piece.patchAllPiecesByName();
+      await Piece.patchAllPiecesByName();
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);
     } catch (error) {
@@ -38,9 +40,9 @@ events = async (socket) => {
 
   /* USER */
   //Update male users to poisoned
-  socket.on(POISON_ALL, async (data) => {
+  socket.on(POISON_ALL, async () => {
     try {
-      const poisonAll = await User.poisonAllAcoliteMales();
+      await User.poisonAllAcoliteMales();
       const allAcolites = await User.getActiveAcolites();
       console.log("This is poisoned acolites");
       console.log(allAcolites);
@@ -90,7 +92,7 @@ events = async (socket) => {
   socket.on(ACOLITE_STATE, async (data) => {
     try {
       console.log({ Acolite_state: data.data });
-      const updatedUser = await User.patchUser(data.email, data.data);
+      await User.patchUser(data.email, data.data);
       const getCurrentAcolite = await User.getUserByEmail(data.email);
       io.emit(ACOLITE_STATE, getCurrentAcolite);
     } catch (error) {
@@ -139,7 +141,7 @@ events = async (socket) => {
   socket.on(DOLL_DETAILS, async (data) => {
     try {
       console.log(data);
-      const updatedDoll = await Piece.patchPiece(data.pieceName, data.data);
+      await Piece.patchPiece(data.pieceName, data.data);
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);
     } catch (error) {
@@ -147,6 +149,30 @@ events = async (socket) => {
       io.emit(error, DOLL_DETAILS_ERROR);
     }
   });
+
+
+  //JWT validation//
+  socket.on(REFRESH_VALIDATION, async (data) => {
+    console.log(data);
+    socket.use();
+  })
+
+  // socket.on(REFRESH_VALIDATION, (data) => {
+  //   console.log(data)
+  //   // socket.use((next) => {
+      
+
+  //   //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
+  //   //     if(error) return next(new Error('Authentication error'));
+
+  //   //     req.email = email
+  //   //     next()
+  //   // })
+  // });
+
+
+
+
 };
 
 exports.socketEvents = events;

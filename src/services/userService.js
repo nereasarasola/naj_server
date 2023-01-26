@@ -73,7 +73,6 @@ const poisonAllAcoliteMales = async()=>{
 }
 
 
-
 module.exports = {
     createNewUser,
     cryptEntry,
