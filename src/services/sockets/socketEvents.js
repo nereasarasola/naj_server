@@ -54,22 +54,6 @@ events = async (socket) => {
     }
   });
 
-  socket.on(NEW_USER, async (data) => {
-    let email = data.email;
-    let newUser = data.data;
-
-    try {
-      const user = await User.createNewUser(email, newUser);
-      io.emit(error, user);
-
-    } catch(error) {
-      console.log(error);
-      io.emit(error, NEW_USER_ERROR)
-
-    }
-
-  })
-
   //Update the socketId of the user
   console.log({ New_socket: socket.id });
 
@@ -146,39 +130,11 @@ events = async (socket) => {
     }
   });
 
-
-  //JWT validation//
-  socket.on(REFRESH_VALIDATION, async (data) => {
-    console.log(data);
-    socket.use();
-  })
-
-
-  socket.on("disconnect", async (reason) => {
+  socket.on("disconnect", async (data) => {
     //io.emit(DISCONNECT, reason);
-    console.log('socket disconnected : ' + socket.id)
+    console.log('socket disconnected : ' + socket.id);
+    socket.disconnect();
   });
-
-
-
-
-
-  // socket.on(REFRESH_VALIDATION, (data) => {
-  //   console.log(data)
-  //   // socket.use((next) => {
-      
-
-    //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
-    //     if(error) return next(new Error('Authentication error'));
-
-    //     req.email = email
-    //     next()
-    // })
-  
-
-
-
-
 };
 
 exports.socketEvents = events;
