@@ -1,7 +1,7 @@
 const server = require('../../index');
 const io = server.socketIO;
 const jwt = require('jsonwebtoken');
-const {generateAccessToken, generateRefreshToken} = require("../jwt");
+const {generateAccessToken, generateRefreshToken} = require("../../jwt");
 const {CONNECTION} = require('../../constants');
 require('dotenv').config();
 
@@ -30,7 +30,7 @@ io.on(CONNECTION, (socket) => {
                 let tokens = {accesToken, refreshToken}
 
                 io.emit({tokens}, CONNECTION);
-                // io.on(CONNECTION, socketEvents);
+                io.on(CONNECTION, socketEvents);
 
             }
         });
