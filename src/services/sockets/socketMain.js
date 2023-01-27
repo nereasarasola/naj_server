@@ -12,12 +12,17 @@ io.on(CONNECTION, (socket) => {
 
     console.log('connection')
 
+    const token = socket.handshake.query.data.token;
+    const userEmail = socket.handshake.query.data.email;
+    console.log({token : token});
+    console.log({email: userEmail})
+
     socket.use(([event, ...args], next) => {
 
-        const token = socket.handshake.query.data.token;
-        const userEmail = socket.handshake.query.data.email;
-        console.log({token : token});
-        console.log({email: userEmail})
+        // const token = socket.handshake.query.data.token;
+        // const userEmail = socket.handshake.query.data.email;
+        // console.log({token : token});
+        // console.log({email: userEmail})
 
 
         //Si el refresh token no es válido, desconectaremos la conexión
