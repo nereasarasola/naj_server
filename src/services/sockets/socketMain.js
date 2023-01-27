@@ -8,7 +8,7 @@ require('dotenv').config();
 const socketEvents = require('./socketEvents').socketEvents;
 
 //Middleware//
-io.on(CONNECTION, (socketEvents));
+io.on(CONNECTION, socketEvents);
 
 // socket.use(([event, ...args], next) => {
 
