@@ -15,25 +15,23 @@ io.on(CONNECTION, (socket) => {
     console.log(socket.handshake);
        
     const token = socket.handshake.auth.token;
-    const userEmail = socket.handshake.email;
 
     console.log({token : token});
-    console.log({email: userEmail})
 
 
     //Si el refresh token no es válido, desconectaremos la conexión
-    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (error, userEmail) => {
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (error) => {
 
         if(error) {
             socket.disconnect();
         }
 
         else {
-            let accesToken = generateAccessToken(userEmail);
-            let refreshToken = generateRefreshToken(userEmail);
-            let tokens = {accesToken, refreshToken}
+            // let accesToken = generateAccessToken(userEmail);
+            // let refreshToken = generateRefreshToken(userEmail);
+            // let tokens = {accesToken, refreshToken}
 
-            io.emit({tokens}, CONNECTION);
+            // io.emit({tokens}, CONNECTION);
             io.on(CONNECTION, socketEvents);
 
         }
