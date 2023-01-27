@@ -1,7 +1,6 @@
 const server = require('../../index');
 const io = server.socketIO;
 const jwt = require('jsonwebtoken');
-const {generateAccessToken, generateRefreshToken} = require("../../jwt");
 const {CONNECTION} = require('../../constants');
 require('dotenv').config();
 
@@ -46,14 +45,12 @@ io.use((socket, next) => {
     //Si el refresh token no es válido, desconectaremos la conexión
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (error) => {
 
-      console.log(error);
-
         if(error) {
             socket.disconnect();
-            next();
+            next(Error('Expired token'))
         }
 
-        else { next();}
+        else { return next();}
     });
 
             
