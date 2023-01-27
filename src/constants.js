@@ -26,6 +26,7 @@ const ERROR404 = "Error 404";
 const POISON_ALL_ERROR = 'poison_all_error';
 
 //Sockets
+const CONNECTION = 'connection';
 const NEW_CONNECTION = 'new_connection';
 const NEW_CONNECTION_ERROR = 'new_connectionError';
 const NEW_USER = 'new_user';
@@ -50,6 +51,7 @@ const REFRESH_VALIDATION = 'refresh_validation';
 
 
 module.exports = {
+    CONNECTION,
     PROJECT_ID,
     STARTED,
     STATUS,

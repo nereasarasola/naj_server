@@ -3,7 +3,7 @@ const Doll = require("../dollService");
 const Piece = require("../pieceService");
 const server = require("../../index");
 const io = server.socketIO;
-const jwt = require('jsonwebtoken');
+
 const {
   NEW_CONNECTION,
   NEW_CONNECTION_ERROR,
@@ -21,7 +21,8 @@ const {
   POISON_ALL_ERROR,
   UPDATE_TO_NOT_FOUND_DOLLS,
   UPDATE_TO_NOT_FOUND_DOLLS_ERROR,
-  REFRESH_VALIDATION
+  REFRESH_VALIDATION,
+  DISCONNECT
 } = require("../../constants");
 
 
@@ -52,27 +53,6 @@ events = async (socket) => {
       io.emit(error, POISON_ALL_ERROR);
     }
   });
-
-  socket.on(NEW_USER, async (data) => {
-    let email = data.email;
-    let newUser = data.data;
-
-    try {
-      const user = await User.createNewUser(email, newUser);
-      io.emit(error, user);
-
-    } catch(error) {
-      console.log(error);
-      io.emit(error, NEW_USER_ERROR)
-
-    }
-
-  })
-
-
-
-
-
 
   //Update the socketId of the user
   console.log({ New_socket: socket.id });
@@ -149,30 +129,6 @@ events = async (socket) => {
       io.emit(error, DOLL_DETAILS_ERROR);
     }
   });
-
-
-  //JWT validation//
-  socket.on(REFRESH_VALIDATION, async (data) => {
-    console.log(data);
-    socket.use();
-  })
-
-  // socket.on(REFRESH_VALIDATION, (data) => {
-  //   console.log(data)
-  //   // socket.use((next) => {
-      
-
-  //   //   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (error, email) => {
-  //   //     if(error) return next(new Error('Authentication error'));
-
-  //   //     req.email = email
-  //   //     next()
-  //   // })
-  // });
-
-
-
-
 };
 
 exports.socketEvents = events;
