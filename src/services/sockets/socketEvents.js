@@ -153,12 +153,6 @@ events = async (socket) => {
       io.emit(error, DOLL_DETAILS_ERROR);
     }
   });
-
-  socket.on("disconnect", async (data) => {
-    //io.emit(DISCONNECT, reason);
-    console.log('socket disconnected : ' + socket.id);
-    socket.disconnect();
-  });
 };
 
 exports.socketEvents = events;
