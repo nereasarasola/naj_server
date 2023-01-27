@@ -12,8 +12,11 @@ io.on(CONNECTION, (socket) => {
 
     socket.use(([event, ...args], next) => {
 
-    const token = socket.handshake.query.data.token;
-    const userEmail = socket.handshake.query.data.email;
+    console.log(socket.handshake.query);
+    
+    const token = socket.handshake.query.token;
+    const userEmail = socket.handshake.query.email;
+
     console.log({token : token});
     console.log({email: userEmail})
 
