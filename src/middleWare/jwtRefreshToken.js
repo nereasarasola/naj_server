@@ -22,6 +22,7 @@ async function authenticateRefreshToken (req, res, next) {
     jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (error, email) => {
 
         if(error) {
+            console.log(error);
             return res.status(403).send({
                 status: FORBIDDEN,
                 data: {
