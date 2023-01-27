@@ -47,7 +47,7 @@ io.use((socket, next) => {
 
         if(error) {
             socket.disconnect();
-            next(Error('Expired token'))
+            next(new Error('Expired token'))
         }
 
         else { return next();}
