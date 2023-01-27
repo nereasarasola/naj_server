@@ -5,6 +5,7 @@ const {STATUS, MISSING_EMAIL, MESSAGE } = require('../constants');
 const createPermanentToken = async (req, res) => {
 
     const { email } = req.body;
+    console.log({email: email})
 
     if (!email) {
         return res.status(400).send({status: STATUS, data: { error: MISSING_EMAIL }});
