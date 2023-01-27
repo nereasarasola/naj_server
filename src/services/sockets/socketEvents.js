@@ -3,7 +3,7 @@ const Doll = require("../dollService");
 const Piece = require("../pieceService");
 const server = require("../../index");
 const io = server.socketIO;
-const jwt = require('jsonwebtoken');
+
 const {
   NEW_CONNECTION,
   NEW_CONNECTION_ERROR,
