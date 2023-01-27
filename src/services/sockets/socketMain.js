@@ -39,7 +39,25 @@ const socketEvents = require('./socketEvents').socketEvents;
 // }
 
 //Middleware//
-io.on(CONNECTION, socketEvents);
+io.use((socket, next) => {
+
+    const token = socket.handshake.auth.token;
+
+    //Si el refresh token no es válido, desconectaremos la conexión
+    jwt.verify(token, process.env.REFRESH_TOKEN_SECRET, (error) => {
+
+      console.log(error);
+
+        if(error) {
+            socket.disconnect();
+            next();
+        }
+
+        else { next();}
+    });
+
+            
+}).on(CONNECTION, socketEvents);
 
 
 module.exports = io;
