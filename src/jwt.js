@@ -13,7 +13,7 @@ const generateRefreshToken = (email) => {
 }
 
 const generatePermanentToken = (email) => {
-   const result = jwt.sign({data: email}, process.env.ACCESS_TOKEN_SECRET)
+   const result = jwt.sign({data: email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 1000 * 1000 })
    return result
 }
 
