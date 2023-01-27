@@ -12,7 +12,13 @@ const generateRefreshToken = (email) => {
    return result
 }
 
+const generatePermanentToken = (email) => {
+   const result = jwt.sign({data: email}, process.env.PERMANENT_TOKEN_SECRET)
+   return result
+}
+
 module.exports = {
    generateAccessToken,
-   generateRefreshToken
+   generateRefreshToken,
+   generatePermanentToken
 }
