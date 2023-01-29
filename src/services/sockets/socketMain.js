@@ -1,70 +1,26 @@
 const server = require('../../index');
 const io = server.socketIO;
 const jwt = require('jsonwebtoken');
-const {generateAccessToken, generateRefreshToken} = require("../../jwt");
 const {CONNECTION} = require('../../constants');
 require('dotenv').config();
 
 const socketEvents = require('./socketEvents').socketEvents;
 
-//Middleware//
-io.on(CONNECTION, (socket) => {
+//Middleware of the access token of JWT//
+io.use(function(socket, next){
 
-    console.log('connection')
-
-    socket.use(([event, ...args], next) => {
-
-        console.log('event')
-        console.log({event: event});
-        console.log({args: args})
-        //Si el refresh token no es válido, desconectaremos la conexión
-        jwt.verify(args, process.env.REFRESH_TOKEN_SECRET, (error, email) => {
-
-            if(error) {
-                socket.disconnect();
-            }
-
-            else {
-                let accesToken = generateAccessToken(email);
-                let refreshToken = generateRefreshToken(email);
-                let tokens = {accesToken, refreshToken}
-
-                io.emit({tokens}, CONNECTION);
-                io.on(CONNECTION, socketEvents);
-
-            }
-        });
-
+    if (socket.handshake.query.JWTAccess){
+      jwt.verify(socket.handshake.query.JWTAccess, process.env.ACCESS_TOKEN_SECRET, function(error) {
+        if (error) return next(new Error('Authentication error'));
         next();
-           
-    });
+      });
+    }
 
-    
+    else {
+      next(new Error('Authentication error'));
+    }  
 
+}).on(CONNECTION, socketEvents);
 
-    
-
-   
-});
-
-
-
-
-//JWT validation//
-  // io.on("connection", (socket) => {
-  //   socket.use(([event, ...args], next) => {
-  //     if (isUnauthorized(event)) {
-  //       return next(new Error("unauthorized event"));
-  //     }
-  //     // do not forget to call next
-  //     next();
-  //   });
-  
-  //   socket.on("error", (err) => {
-  //     if (err && err.message === "unauthorized event") {
-  //       socket.disconnect();
-  //     }
-  //   });
-  // });
 
 module.exports = io;

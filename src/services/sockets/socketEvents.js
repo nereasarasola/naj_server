@@ -3,12 +3,10 @@ const Doll = require("../dollService");
 const Piece = require("../pieceService");
 const server = require("../../index");
 const io = server.socketIO;
-const jwt = require('jsonwebtoken');
+
 const {
   NEW_CONNECTION,
   NEW_CONNECTION_ERROR,
-  NEW_USER,
-  NEW_USER_ERROR,
   ACOLITE_STATE,
   ACOLITE_STATE_ERROR,
   MISSION_STATUS,
@@ -120,7 +118,7 @@ events = async (socket) => {
 
   socket.on(DOLL_DETAILS, async (data) => {
     try {
-      console.log(data);
+      console.log({Doll_details: data});
       await Piece.patchPiece(data.pieceName, data.data);
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);
@@ -128,12 +126,6 @@ events = async (socket) => {
       console.log(error);
       io.emit(error, DOLL_DETAILS_ERROR);
     }
-  });
-
-  socket.on("disconnect", async (data) => {
-    //io.emit(DISCONNECT, reason);
-    console.log('socket disconnected : ' + socket.id);
-    socket.disconnect();
   });
 };
 
