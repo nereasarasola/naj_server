@@ -7,8 +7,6 @@ const io = server.socketIO;
 const {
   NEW_CONNECTION,
   NEW_CONNECTION_ERROR,
-  NEW_USER,
-  NEW_USER_ERROR,
   ACOLITE_STATE,
   ACOLITE_STATE_ERROR,
   MISSION_STATUS,
@@ -120,7 +118,7 @@ events = async (socket) => {
 
   socket.on(DOLL_DETAILS, async (data) => {
     try {
-      console.log(data);
+      console.log({Doll_details: data});
       await Piece.patchPiece(data.pieceName, data.data);
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);
