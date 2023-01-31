@@ -10,12 +10,10 @@ const socketEvents = require('./socketEvents').socketEvents;
 io.use(function(socket, next){
 
     if (socket.handshake.query.JWTAccess){
-
       jwt.verify(socket.handshake.query.JWTAccess, process.env.ACCESS_TOKEN_SECRET, function(error) {
         if (error) return next(new Error('Authentication error'));
         next();
       });
-
     }
 
     else {

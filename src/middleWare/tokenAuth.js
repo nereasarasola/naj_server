@@ -7,24 +7,6 @@ const firebase = admin.initializeApp ({
   projectId:  PROJECT_ID
 });
 
-// async function verifyUser (req, res, next) {
-//   const {email,name,avatar}= req.body;
-//   try {
-//     const newUser = await firebase.auth().createUser({
-//       email: email,
-//       displayName:name,
-//       photoURL: avatar
-//     })      
-//     if (newUser) return next();
-//   } catch (error) {
-//     console.log(error.errorInfo)
-//     return res.status(400).send({
-//       status: STATUS,
-//       data: { error: INCORRECT_DATA}
-//   })}
-// }
-  
-
 async function verifyIdToken (req,res,next) {
   const {idToken} = req.body;
   try {

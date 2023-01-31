@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken')
 
 const generateAccessToken = (email) => {
    //Una hora: 60 * 60
-   const result = jwt.sign({data: email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 15 })
+   const result = jwt.sign({data: email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m'  })
    return result
 }
 
@@ -12,7 +12,13 @@ const generateRefreshToken = (email) => {
    return result
 }
 
+const generatePermanentToken = (email) => {
+   const result = jwt.sign({data: email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 1000 * 1000 })
+   return result
+}
+
 module.exports = {
    generateAccessToken,
-   generateRefreshToken
+   generateRefreshToken,
+   generatePermanentToken
 }

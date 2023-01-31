@@ -3,7 +3,7 @@ const {UNAUTHORIZED, FORBIDDEN, FORBIDDEN_MESSAGE, UNAUTHORIZED_MESSAGE, STATUS}
 const {generateAccessToken, generateRefreshToken} = require("../jwt");
 require('dotenv').config();
 
-async function authenticateRefreshToken (req, res, next) {
+async function authenticateRefreshToken (req, res) {
 
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
@@ -32,12 +32,10 @@ async function authenticateRefreshToken (req, res, next) {
         }
 
         else {
+
            let accesToken = generateAccessToken(email);
            let refreshToken = generateRefreshToken(email);
 
-           console.log({acces_token: accesToken})
-           console.log({refresh_token: refreshToken})
-           
            return res.send({ tokens: {accesToken, refreshToken} });
 
         }
