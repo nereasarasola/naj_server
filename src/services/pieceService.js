@@ -31,7 +31,7 @@ const patchAllPiecesByName = async() => {
 
 const deletePiece = async() =>{
     try {
-        const deletePiece = Piece.deletePiece()
+        const deletePiece = Piece.deletePiece();
         return deletePiece;
     } catch (error) {
         throw error;

@@ -4,7 +4,7 @@ const {STATUS, MESSAGE} = require('../constants');
 
 
 
-const getAllPieces = async (req, res) => {
+const getAllPieces = async (res) => {
   try {
     const allPieces = await pieceService.getAllPieces();
     res.send({ data: allPieces });
@@ -18,10 +18,7 @@ const getAllPieces = async (req, res) => {
 };
 
 const patchPiece = async (req, res) => {
-  const {
-    body,
-    params: { pieceName },
-  } = req;
+  const { body, params: { pieceName }} = req;
   try {
     const patchPiece = await pieceService.patchPiece(pieceName,body);
     res.send({ data: patchPiece });
@@ -34,7 +31,7 @@ const patchPiece = async (req, res) => {
   }
 };
 
-const patchAllPiecesByName = async (req, res) => {
+const patchAllPiecesByName = async (res) => {
   try {
     const pieces = await pieceService.patchAllPiecesByName();
     res.send({ data: pieces });

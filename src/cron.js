@@ -7,7 +7,7 @@ const io = server.socketIO;
 
 
 const job = async () => {
-    //Every minute: 0 */1 * * * *
+
     cron.schedule('0 */1 * * *' , async () => {
         await services.updateAcoliteFatigueConcentration();
         await services.updateAcoliteState();
