@@ -19,8 +19,6 @@ const {
   POISON_ALL_ERROR,
   UPDATE_TO_NOT_FOUND_DOLLS,
   UPDATE_TO_NOT_FOUND_DOLLS_ERROR,
-  REFRESH_VALIDATION,
-  DISCONNECT
 } = require("../../constants");
 
 
@@ -43,8 +41,6 @@ events = async (socket) => {
     try {
       await User.poisonAllAcoliteMales();
       const allAcolites = await User.getActiveAcolites();
-      console.log("This is poisoned acolites");
-      console.log(allAcolites);
       io.emit(POISON_ALL, allAcolites);
     } catch (error) {
       console.log(error);
@@ -82,10 +78,7 @@ events = async (socket) => {
   //Check the user that has been scanned
   socket.on(SCANNED_ACOLITE, async (data) => {
     try {
-      console.log({Acolite_email: data.email})
       const email = data.email;
-      console.log(`${email}'s`);
-
       const updatedUser = await User.cryptEntry(email);
       io.emit(SCANNED_ACOLITE, updatedUser);
     } catch (error) {
@@ -94,20 +87,9 @@ events = async (socket) => {
     }
   });
 
-  // socket.on('disconnect', async () => {
-  //   console.log('Client disconnected: ', socket.id);
-  //   //When the user is loged out, update the socketId to null
-  //   let email = 'nerea.sarasola@ikasle.aeg.eus';
-  //   let data = {socketID: null}
-  //   const updateAcolite = await User.patchUser(email, data);
-  //   socket.emit('disconnected', updateAcolite);
-
-  // });
-
   /* DOLL */
   socket.on(MISSION_STATUS, async (data) => {
     try {
-      console.log({ MissionStatus: data.data });
       const updatedDoll = await Doll.patchDoll(data);
       io.emit(MISSION_STATUS, updatedDoll);
     } catch (error) {
@@ -118,7 +100,6 @@ events = async (socket) => {
 
   socket.on(DOLL_DETAILS, async (data) => {
     try {
-      console.log({Doll_details: data});
       await Piece.patchPiece(data.pieceName, data.data);
       const allDolls = await Piece.getAllPieces();
       io.emit(DOLL_DETAILS, allDolls);

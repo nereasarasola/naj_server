@@ -90,7 +90,7 @@ const cryptEntry = async (req, res) => {
   }
 }
 
-const getActiveAcolites = async (req, res) => {
+const getActiveAcolites = async (res) => {
   try {
     const acolites = await userService.getActiveAcolites();
     res.send({  data: acolites });

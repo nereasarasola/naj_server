@@ -45,7 +45,7 @@ const cryptEntry = async(email) =>{
   }
 }
 
-//Get all the acolites that are active
+
 const getActiveAcolites = async()=>{
   const activeAcolites = User.find({ $and: [
     {role: false}, {active: true} 
@@ -70,7 +70,6 @@ const getUserByEmail = async(email) => {
   else {
     return user;
   }
-
 }
 
 const patchUser= async(email,changes)=>{
@@ -83,7 +82,6 @@ const patchUser= async(email,changes)=>{
       {new:true}
     );
     return patcheduser;
-  
   }
 }
 
@@ -123,7 +121,6 @@ const updateAcoliteState = async()=>{
   } catch (error) {
       throw error;
   }
-
 }
 
 const poisonAllAcoliteMales = async()=>{
@@ -139,7 +136,6 @@ const poisonAllAcoliteMales = async()=>{
 }
 
 module.exports = {
-
     loginUser,
     cryptEntry,
     getActiveAcolites,

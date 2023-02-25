@@ -2,8 +2,7 @@ require('dotenv').config()
 const jwt = require('jsonwebtoken')
 
 const generateAccessToken = (email) => {
-   //Una hora: 60 * 60
-   const result = jwt.sign({data: email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: '1m'  })
+   const result = jwt.sign({data: email}, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 15 })
    return result
 }
 
