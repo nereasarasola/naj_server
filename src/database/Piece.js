@@ -32,8 +32,7 @@ const patchPiece= async(pieceName,changes)=>{
 const patchAllPiecesByName = async() => {
   try {
     const pieces = await Piece.updateMany(
-      {},
-      {isFound: false});
+      {},{isFound: false});
     return pieces;
   } catch(error) {
     throw error;

@@ -10,7 +10,7 @@ const SLEEP = 'sleep';
 const EXHAUSTED = 'exhausted';
 const FAINTED = 'fainted';
 
-//Error message
+//Error messages
 const STATUS = 'FAILED';
 const FORBIDDEN = 'FORBIDDEN';
 const UNAUTHORIZED = 'UNAUTHORIZED';
@@ -43,12 +43,7 @@ const DOLL_DETAILS = 'doll_details';
 const DOLL_DETAILS_ERROR = 'doll_detailsError';
 const POISON_ALL = 'poison_all';
 const UPDATE_TO_NOT_FOUND_DOLLS = 'update_to_not_found_dolls';
-const UPDATE_TO_NOT_FOUND_DOLLS_ERROR = 'error updating dolls';
 const REFRESH_VALIDATION = 'refresh_validation';
-
-
-
-
 
 module.exports = {
     CONNECTION,

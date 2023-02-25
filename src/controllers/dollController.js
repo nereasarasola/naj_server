@@ -10,7 +10,6 @@ const createNewDoll = async (req, res) => {
        pieces: [], 
      };
      try {
-       
        const createdDoll = await dollService.createNewDoll(newDoll);
        res.send({  data: createdDoll });
 
@@ -40,9 +39,7 @@ const getDolls = async (req, res) => {
 
 
 const patchDoll = async (req, res) => {
-  const  {
-    body
-  } = req;
+  const  {body} = req;
   try {
     const patchDoll = await dollService.patchDoll(body);
     res.send({  data: patchDoll });
@@ -55,7 +52,7 @@ const patchDoll = async (req, res) => {
   }
 }
 
-const deleteDolls = async (req, res) => {
+const deleteDolls = async (res) => {
   try {
     const deleteDolls = await dollService.deleteDolls();
     res.send({  data: deleteDolls });
